@@ -45,47 +45,54 @@ const mockProjects = [
   }
 ];
 
-function ProjectCard({ project, index, isActive, onHover, onOpenStack }) {
+function ProjectCard({ project, index, onOpenStack }) {
   const isLeft = index % 2 === 0;
   
+  const cardRef = useRef(null);
   const detailsRef = useRef(null);
   const armsRef = useRef([]);
 
   useEffect(() => {
-    if (isActive) {
-       gsap.to(detailsRef.current, { 
-         y: 0, 
-         opacity: 1, 
-         duration: 0.3, 
-         ease: 'power3.out' 
-       });
-       
-       gsap.to(armsRef.current, { 
-         x: 0, 
-         opacity: 1, 
-         stagger: 0.05, 
-         duration: 0.4, 
-         ease: 'back.out(1.5)',
-         pointerEvents: 'auto'
-       });
-    } else {
-       gsap.to(detailsRef.current, { 
-         y: -30, 
-         opacity: 0, 
-         duration: 0.2, 
-         ease: 'power3.in' 
-       });
-       
-       gsap.to(armsRef.current, { 
-         x: isLeft ? -50 : 50, 
-         opacity: 0, 
-         stagger: 0.05, 
-         duration: 0.2, 
-         ease: 'power3.in',
-         pointerEvents: 'none'
-       });
-    }
-  }, [isActive, isLeft]);
+    let ctx = gsap.context(() => {
+      let mm = gsap.matchMedia();
+      mm.add({
+        isDesktop: "(min-width: 769px)",
+        isMobile: "(max-width: 768px)"
+      }, (context) => {
+        let { isDesktop } = context.conditions;
+        const effectiveLeft = isDesktop ? isLeft : true; 
+        
+        // Initial setup
+        gsap.set(detailsRef.current, { y: -30, opacity: 0 });
+        gsap.set(armsRef.current, { x: effectiveLeft ? -50 : 50, opacity: 0, pointerEvents: 'none' });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: cardRef.current,
+            scroller: "#projects-container",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        });
+        
+        tl.to(detailsRef.current, { 
+             y: 0, 
+             opacity: 1, 
+             duration: 0.3, 
+             ease: 'power3.out' 
+        })
+        .to(armsRef.current, { 
+             x: 0, 
+             opacity: 1, 
+             stagger: 0.1, 
+             duration: 0.4, 
+             ease: 'back.out(1.5)',
+             pointerEvents: 'auto'
+        }, "-=0.15");
+      });
+    });
+    return () => ctx.revert();
+  }, [isLeft]);
 
   const arms = [
     { label: 'GITHUB', icon: <GithubIcon size={20} strokeWidth={2.5} />, action: () => window.open(project.github, '_blank') },
@@ -93,30 +100,21 @@ function ProjectCard({ project, index, isActive, onHover, onOpenStack }) {
     { label: 'TECH STACK', icon: <Code size={20} strokeWidth={2.5} />, action: () => onOpenStack(project.stack) }
   ];
 
+  const effectiveLeft = window.innerWidth <= 768 ? true : isLeft;
+
   return (
     <div 
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: isLeft ? 'flex-start' : 'flex-end',
-        margin: '3rem 0 8rem 0',
-        padding: isLeft ? '0 0 0 10vw' : '0 10vw 0 0',
-        zIndex: mockProjects.length - index,
-      }}
+      ref={cardRef}
+      className={`project-row ${isLeft ? 'left' : 'right'}`}
+      style={{ zIndex: mockProjects.length - index }}
     >
       <div 
-        style={{ 
-          display: 'flex', 
-          flexDirection: isLeft ? 'row' : 'row-reverse', 
-          alignItems: 'flex-start',
-          position: 'relative'
-        }}
-        onMouseEnter={onHover}
+        className="project-content-wrapper"
       >
-        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', width: '100%' }}>
           
           <div 
-            className={`menu-item-box ${isActive ? 'force-active' : ''}`} 
+            className="menu-item-box force-active" 
             style={{ 
               position: 'relative', 
               zIndex: 3, 
@@ -131,10 +129,10 @@ function ProjectCard({ project, index, isActive, onHover, onOpenStack }) {
           <div 
             ref={detailsRef}
             style={{
-              position: 'absolute',
-              top: '80%', 
-              left: isLeft ? '5%' : 'auto',
-              right: !isLeft ? '5%' : 'auto',
+              position: 'relative',
+              marginTop: '-15px', 
+              marginLeft: effectiveLeft ? '5%' : '0',
+              marginRight: !effectiveLeft ? '5%' : '0',
               backgroundColor: 'var(--black)',
               color: 'var(--white)',
               padding: '2.5rem 1.5rem 1rem 1.5rem', 
@@ -153,40 +151,32 @@ function ProjectCard({ project, index, isActive, onHover, onOpenStack }) {
           </div>
         </div>
 
-        <div 
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '12px',
-            zIndex: 1, 
-            marginTop: '15px',
-            marginLeft: isLeft ? '35px' : '0',
-            marginRight: !isLeft ? '35px' : '0',
-          }}
-        >
-          {arms.map((arm, i) => (
-            <div 
-               key={arm.label}
-               ref={el => armsRef.current[i] = el}
-               className="menu-item-box"
-               style={{
-                 padding: '0.8rem 2rem',
-                 minWidth: '180px',
-                 display: 'flex',
-                 alignItems: 'center',
-                 justifyContent: isLeft ? 'flex-start' : 'flex-end',
-                 gap: '15px',
-                 transform: `translateX(${isLeft ? '-50px' : '50px'}) skewX(-10deg)`,
-                 opacity: 0,
-                 pointerEvents: 'none',
-                 marginLeft: isLeft ? `${(i) * 30}px` : '0', 
-                 marginRight: !isLeft ? `${(i) * 30}px` : '0',
-                 backgroundColor: 'var(--red)',
-                 color: 'var(--white)',
-                 borderWidth: '3px',
-                 boxShadow: '4px 4px 0px var(--black)',
-                 cursor: 'url(/cursor.svg) 11 6, pointer',
-               }}
+        <div className="project-arms-container">
+          {arms.map((arm, i) => {
+            const effectiveLeft = window.innerWidth <= 768 ? true : isLeft;
+            return (
+              <div 
+                 key={arm.label}
+                 ref={el => armsRef.current[i] = el}
+                 className="menu-item-box"
+                 style={{
+                   padding: '0.8rem 2rem',
+                   minWidth: '180px',
+                   display: 'flex',
+                   alignItems: 'center',
+                   justifyContent: effectiveLeft ? 'flex-start' : 'flex-end',
+                   gap: '15px',
+                   transform: `translateX(${effectiveLeft ? '-50px' : '50px'}) skewX(-10deg)`,
+                   opacity: 0,
+                   pointerEvents: 'none',
+                   marginLeft: effectiveLeft ? `${(i) * 30}px` : '0', 
+                   marginRight: !effectiveLeft ? `${(i) * 30}px` : '0',
+                   backgroundColor: 'var(--red)',
+                   color: 'var(--white)',
+                   borderWidth: '3px',
+                   boxShadow: '4px 4px 0px var(--black)',
+                   cursor: 'url(/cursor.svg) 11 6, pointer',
+                 }}
                onClick={(e) => {
                  e.stopPropagation();
                  arm.action();
@@ -200,11 +190,11 @@ function ProjectCard({ project, index, isActive, onHover, onOpenStack }) {
                  e.currentTarget.style.color = 'var(--white)';
                }}
             >
-              {isLeft && arm.icon}
+              {effectiveLeft && arm.icon}
               <h3 className="font-p5" style={{ fontSize: '1.4rem', margin: 0, marginTop: '2px' }}>{arm.label}</h3>
-              {!isLeft && arm.icon}
+              {!effectiveLeft && arm.icon}
             </div>
-          ))}
+          )})}
         </div>
       </div>
     </div>
@@ -213,10 +203,9 @@ function ProjectCard({ project, index, isActive, onHover, onOpenStack }) {
 
 export default function Projects({ onNavigate }) {
   const [activeStack, setActiveStack] = useState(null);
-  const [activeProject, setActiveProject] = useState(null);
 
   return (
-    <div className="absolute-fill bg-p5-white" style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+    <div id="projects-container" className="absolute-fill bg-p5-white" style={{ overflowY: 'auto', overflowX: 'hidden' }}>
       <div 
         style={{
           position: 'fixed',
@@ -261,8 +250,6 @@ export default function Projects({ onNavigate }) {
               key={project.id} 
               project={project} 
               index={i} 
-              isActive={activeProject === i}
-              onHover={() => setActiveProject(i)}
               onOpenStack={setActiveStack} 
             />
           ))}

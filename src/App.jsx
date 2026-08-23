@@ -3,7 +3,11 @@ import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
+import Experience from './components/Experience';
+import Certifications from './components/Certifications';
 import TransitionOverlay from './components/TransitionOverlay';
+
+import ClickSpark from './components/ClickSpark';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +26,10 @@ function App() {
         return <Hero onNavigate={navigate} />;
       case 'projects':
         return <Projects onNavigate={navigate} />;
+      case 'experience':
+        return <Experience onNavigate={navigate} />;
+      case 'certifications':
+        return <Certifications onNavigate={navigate} />;
       case 'contact':
         return <Contact onNavigate={navigate} />;
       default:
@@ -31,6 +39,7 @@ function App() {
 
   return (
     <>
+      <ClickSpark />
       <TransitionOverlay ref={transitionRef} onPageChange={setCurrentPage} />
       
       {renderPage()}

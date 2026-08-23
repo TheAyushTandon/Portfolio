@@ -59,6 +59,7 @@ export default function Hero({ onNavigate }) {
           src="/hero.png" 
           alt="Hero"
           className="hero-img"
+          fetchpriority="high"
         />
       </div>
 

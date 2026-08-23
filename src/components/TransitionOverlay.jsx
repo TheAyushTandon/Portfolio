@@ -7,11 +7,15 @@ const TransitionOverlay = forwardRef(({ onPageChange }, ref) => {
 
   useImperativeHandle(ref, () => ({
     playTransition: (targetPage) => {
-      containerRef.current.style.pointerEvents = 'all';
+      if (containerRef.current) {
+        containerRef.current.style.pointerEvents = 'all';
+      }
       
       const tl = gsap.timeline({
         onComplete: () => {
-          containerRef.current.style.pointerEvents = 'none';
+          if (containerRef.current) {
+            containerRef.current.style.pointerEvents = 'none';
+          }
         }
       });
       

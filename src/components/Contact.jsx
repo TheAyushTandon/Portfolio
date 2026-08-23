@@ -85,31 +85,15 @@ export default function Contact({ onNavigate }) {
         </div>
 
         {/* Content Split Layout */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6rem', alignItems: 'stretch', padding: '0 2vw 10rem 2vw' }}>
+        <div className="contact-split">
           
           {/* Bio Box */}
-          <div style={{ flex: '1 1 450px', position: 'relative' }}>
-             <div 
-               style={{
-                 backgroundColor: 'var(--red)',
-                 border: '6px solid var(--black)',
-                 boxShadow: '15px 15px 0px var(--black)',
-                 padding: '3rem',
-                 transform: 'skewX(-5deg)',
-                 position: 'relative',
-                 height: '100%'
-               }}
-             >
-               <h2 className="font-p5 text-p5-white" style={{ fontSize: '4rem', margin: '0 0 1.5rem 0', textShadow: '4px 4px 0px var(--black)' }}>
+          <div className="contact-bio-wrapper">
+             <div className="contact-bio-box">
+               <h2 className="font-p5 text-p5-white contact-bio-title">
                  TARGET DOSSIER
                </h2>
-               <div style={{ 
-                 transform: 'skewX(5deg)', 
-                 backgroundColor: 'var(--black)', 
-                 color: 'var(--white)', 
-                 padding: '2.5rem', 
-                 border: '4px solid var(--white)' 
-               }}>
+               <div className="contact-bio-inner">
                  <p style={{ fontFamily: 'Roboto', fontSize: '1.4rem', lineHeight: 1.6, margin: 0 }}>
                    I like to design and automate things, solving real-life problems. I also love to try new food and enjoy sports. 
                    <br/><br/>
@@ -120,18 +104,18 @@ export default function Contact({ onNavigate }) {
           </div>
 
           {/* Links / Network */}
-          <div style={{ flex: '1 1 500px', display: 'flex', flexDirection: 'column', gap: '25px', justifyContent: 'center' }}>
+          <div className="contact-links-wrapper">
             {links.map((link, i) => (
               <div 
                 key={link.label}
                 ref={el => linksRef.current[i] = el}
-                className="menu-item-box"
+                className="menu-item-box contact-link-box"
                 style={{
+                  '--stagger-offset': `${i * 30}px`,
                   display: 'flex',
                   alignItems: 'center',
                   padding: '1rem 2rem',
                   gap: '20px',
-                  marginLeft: `${i * 30}px`, // Stagger physical position
                   cursor: 'url(/cursor.svg) 11 6, pointer',
                   backgroundColor: 'var(--white)',
                   color: 'var(--black)'
