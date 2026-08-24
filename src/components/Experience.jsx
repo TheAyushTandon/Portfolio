@@ -27,7 +27,7 @@ const experiences = [
     role: "Software Engineer",
     company: "StepCode",
     date: "Jun 2026 - Present · 3 mos",
-    location: "Greater Noida · Hybrid",
+    location: "Greater Noida · On-site",
     type: "FULL TIME",
     skills: [],
     details: []
@@ -121,7 +121,7 @@ const education = [
     role: "Matriculation (IT)",
     company: "St. Mary's Sr. Sec. School",
     date: "Apr 2021 - Apr 2022",
-    location: "Kota",
+    location: "Haridwar",
     type: "ACADEMIA"
   }
 ];
