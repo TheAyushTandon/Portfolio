@@ -1,13 +1,13 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, Suspense, lazy } from 'react';
 import Preloader from './components/Preloader';
 import Hero from './components/Hero';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import Experience from './components/Experience';
-import Certifications from './components/Certifications';
 import TransitionOverlay from './components/TransitionOverlay';
-
 import ClickSpark from './components/ClickSpark';
+
+const Projects = lazy(() => import('./components/Projects'));
+const Contact = lazy(() => import('./components/Contact'));
+const Experience = lazy(() => import('./components/Experience'));
+const Certifications = lazy(() => import('./components/Certifications'));
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,13 +25,13 @@ function App() {
       case 'hero':
         return <Hero onNavigate={navigate} />;
       case 'projects':
-        return <Projects onNavigate={navigate} />;
+        return <Suspense fallback={null}><Projects onNavigate={navigate} /></Suspense>;
       case 'experience':
-        return <Experience onNavigate={navigate} />;
+        return <Suspense fallback={null}><Experience onNavigate={navigate} /></Suspense>;
       case 'certifications':
-        return <Certifications onNavigate={navigate} />;
+        return <Suspense fallback={null}><Certifications onNavigate={navigate} /></Suspense>;
       case 'contact':
-        return <Contact onNavigate={navigate} />;
+        return <Suspense fallback={null}><Contact onNavigate={navigate} /></Suspense>;
       default:
         return <Hero onNavigate={navigate} />;
     }
