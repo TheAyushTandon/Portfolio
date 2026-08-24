@@ -41,7 +41,7 @@ export default function Hero({ onNavigate }) {
       <div 
         className="absolute-fill"
         style={{
-          backgroundImage: "url('/bg.png')",
+          backgroundImage: "url('/bg.webp')",
           backgroundSize: '100% 100%', 
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -56,10 +56,10 @@ export default function Hero({ onNavigate }) {
       >
         <img 
           ref={heroImgRef}
-          src="/hero.png" 
+          src="/hero.webp" 
           alt="Hero"
           className="hero-img"
-          fetchpriority="high"
+          fetchPriority="high"
         />
       </div>
 

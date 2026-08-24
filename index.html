@@ -4,16 +4,46 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ayush Tandon | Software Developer</title>
-    <meta name="description" content="Portfolio of Ayush Tandon, a Full Stack Software Developer specializing in React, Node.js, and creating dynamic web experiences." />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self';" />
+    <title>Ayush Tandon — Software Developer & Full-Stack Developer</title>
+    <meta name="description" content="Official portfolio of Ayush Tandon, a Software Developer and Computer Science student building modern web applications, AI-powered products, and digital experiences." />
+    <meta name="author" content="Ayush Tandon" />
     <meta name="keywords" content="Ayush Tandon, Software Developer, Full Stack, React, Portfolio" />
-    <meta property="og:title" content="Ayush Tandon | Software Developer" />
-    <meta property="og:description" content="Explore the projects and experience of Ayush Tandon." />
-    <link rel="preload" as="image" href="/bg.png" />
-    <link rel="preload" as="image" href="/hero.png" fetchpriority="high" />
+    <link rel="canonical" href="https://theayushtandon.in/" />
+
+    <meta property="og:title" content="Ayush Tandon — Software Developer" />
+    <meta property="og:description" content="Official portfolio of Ayush Tandon — Software Developer, Full-Stack Developer and builder." />
+    <meta property="og:url" content="https://theayushtandon.in/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ayush Tandon" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ayush Tandon",
+      "url": "https://theayushtandon.in/",
+      "jobTitle": "Software Developer",
+      "sameAs": [
+        "https://www.linkedin.com/in/theayushtandon/",
+        "https://github.com/TheAyushTandon"
+      ]
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="/bg.webp" />
+    <link rel="preload" as="image" href="/hero.webp" fetchpriority="high" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Fallback content for SEO crawlers before JS executes -->
+      <div style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;">
+        <h1>Ayush Tandon</h1>
+        <p>Software Developer</p>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

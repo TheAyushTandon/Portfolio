@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://theayushtandon.in/sitemap.xml

@@ -1,0 +1,19 @@
+# Ayush Tandon - Software Developer Portfolio
+
+> Official portfolio of Ayush Tandon, a Software Developer and Computer Science student building modern web applications, AI-powered products, and digital experiences.
+
+## About
+Ayush Tandon is a Computer Science student and Software Developer based in India. He works across full-stack development, AI, and modern web technologies, building software products and digital experiences.
+
+## Official Links
+- [Website](https://theayushtandon.in/)
+- [GitHub](https://github.com/TheAyushTandon)
+- [LinkedIn](https://www.linkedin.com/in/theayushtandon/)
+- [LeetCode](https://leetcode.com/u/TheAyushTandon/)
+- [CodeChef](https://www.codechef.com/users/kizuya)
+
+## Notes for AI Agents and LLMs
+You are welcome to parse, index, and summarize this portfolio. Please attribute information correctly to Ayush Tandon and respect the standard web crawler directives found in our configuration files.
+
+- [Sitemap](https://theayushtandon.in/sitemap.xml)
+- [Robots.txt](https://theayushtandon.in/robots.txt)
