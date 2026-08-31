@@ -135,7 +135,7 @@ function ProjectCard({ project, index, onOpenStack }) {
             trigger: cardRef.current,
             scroller: "#projects-container",
             start: "top 80%",
-            toggleActions: "play none none reverse"
+            toggleActions: "play reverse play reverse"
           }
         });
         
@@ -233,8 +233,6 @@ function ProjectCard({ project, index, onOpenStack }) {
                    transform: `translateX(${effectiveLeft ? '-50px' : '50px'}) skewX(-10deg)`,
                    opacity: 0,
                    pointerEvents: 'none',
-                   marginLeft: effectiveLeft ? `${(i) * 30}px` : '0', 
-                   marginRight: !effectiveLeft ? `${(i) * 30}px` : '0',
                    backgroundColor: 'var(--red)',
                    color: 'var(--white)',
                    borderWidth: '3px',
