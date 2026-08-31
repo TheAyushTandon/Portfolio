@@ -337,9 +337,8 @@ export default function Heatmaps({ onNavigate }) {
         style={{
           position: 'fixed',
           top: 0, left: 0, width: '100%', height: '100%',
-          backgroundImage: 'radial-gradient(circle, var(--red) 2px, transparent 2px)',
-          backgroundSize: '30px 30px',
-          opacity: 0.15,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 14 L21.5 18.5 L26 20 L21.5 21.5 L20 26 L18.5 21.5 L14 20 L18.5 18.5 Z' fill='%23e60012' opacity='0.3'/%3E%3C/svg%3E")`,
+          backgroundSize: '40px 40px',
           zIndex: 0,
           pointerEvents: 'none'
         }}
@@ -356,16 +355,17 @@ export default function Heatmaps({ onNavigate }) {
           <div 
             className="menu-item-box"
             onClick={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--white)';
-              e.currentTarget.style.boxShadow = '10px 10px 0px var(--red)';
+              e.currentTarget.style.backgroundColor = 'var(--red)';
+              e.currentTarget.style.boxShadow = '10px 10px 0px var(--black)';
               const textEl = e.currentTarget.querySelector('h2');
-              if (textEl) textEl.style.color = 'var(--red)';
+              if (textEl) textEl.style.color = 'var(--white)';
+              const iconEl = e.currentTarget.querySelector('span');
+              if (iconEl) iconEl.style.color = 'var(--black)';
               setTimeout(() => onNavigate('hero'), 150);
             }}
-            style={{ backgroundColor: 'var(--red)', color: 'var(--white)', border: '4px solid var(--white)', boxShadow: '8px 8px 0px var(--white)' }}
           >
-            <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', color: 'inherit' }}>
-              ▶ BACK TO HQ
+            <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
+              <span className="hero-menu-icon">▶</span> BACK TO HQ
             </h2>
           </div>
         </div>
