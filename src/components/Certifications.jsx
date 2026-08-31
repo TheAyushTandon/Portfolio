@@ -265,7 +265,7 @@ export default function Certifications({ onNavigate }) {
                 <img 
                   src={getLogoUrl(cert.org)} 
                   alt={`${cert.org} Logo`}
-                  style={{ width: '48px', height: '48px', objectFit: 'contain', filter: 'drop-shadow(2px 2px 0px var(--black))', borderRadius: '4px' }}
+                  style={{ width: '48px', height: '48px', objectFit: 'contain', filter: cert.org === 'HEC Paris' ? 'none' : 'drop-shadow(2px 2px 0px var(--black))', borderRadius: '4px' }}
                 />
                 <a 
                   href={cert.link} 
