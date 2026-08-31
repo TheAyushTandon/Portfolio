@@ -21,27 +21,91 @@ const GithubIcon = ({ size = 20, strokeWidth = 2 }) => (
 const mockProjects = [
   {
     id: 1,
-    title: "PHANTOM THIEVES DB",
-    overview: "A massive, encrypted database for tracking all known targets, shadows, and metaverse distortions in real time.",
-    github: "https://github.com",
-    site: "https://example.com",
-    stack: ["React", "Node.js", "MongoDB", "GSAP"]
+    title: "BENNETT HATCHERY",
+    overview: "Official platform for the Bennett University Hatchery, facilitating startup incubation, mentorship, and investor relations.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://bennett-university-hatchery.vercel.app/",
+    stack: ["Next.js", "React", "Tailwind CSS", "GSAP"]
   },
   {
     id: 2,
-    title: "MEMENTOS NAVIGATOR",
-    overview: "Real-time mapping application to procedurally navigate the collective depths of human cognition.",
-    github: "https://github.com",
-    site: "https://example.com",
-    stack: ["Three.js", "Python", "PostgreSQL", "WebSockets"]
+    title: "BHIMS CRM",
+    overview: "Comprehensive CRM portal for Bennett Hatchery. Features role-based access for Admins, Mentors, and Startup Founders with real-time analytics.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://bennett-hatchery-crm.vercel.app/",
+    stack: ["Next.js", "Supabase", "PostgreSQL", "Tailwind CSS"]
   },
   {
     id: 3,
-    title: "CALLING CARD GENERATOR",
-    overview: "Secure, untraceable message delivery system to boldly declare intentions to high-profile targets.",
-    github: "https://github.com",
-    site: "https://example.com",
-    stack: ["Vue", "Express", "Redis", "Cryptography"]
+    title: "SKEWX / INSCRIBE",
+    overview: "A fluid, high-fidelity rich-text editor and note-taking application designed with a focus on seamless user experience and dynamic formatting.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://www.skewx.fun/",
+    stack: ["React", "Vite", "Appwrite", "GSAP"]
+  },
+  {
+    id: 4,
+    title: "CAMPUS CURATOR",
+    overview: "An exclusive digital marketplace tailored for university students to buy, sell, and discover campus-specific products and services.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://campuscurator.shop/",
+    stack: ["React", "Node.js", "Express", "MongoDB"]
+  },
+  {
+    id: 5,
+    title: "THE EQUIS",
+    overview: "A modern, responsive digital experience platform featuring dynamic animations and a sleek user interface.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://the-equis.vercel.app/",
+    stack: ["React", "GSAP", "Tailwind CSS", "Vite"]
+  },
+  {
+    id: 6,
+    title: "BLOOM TOGETHER",
+    overview: "An interactive digital garden and community platform designed to foster collaborative growth and sharing.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://bloomtogether.vercel.app/garden",
+    stack: ["React", "Next.js", "Node.js", "Tailwind CSS"]
+  },
+  {
+    id: 7,
+    title: "RECTITUDE AI GUARD",
+    overview: "Advanced AI prompt security firewall. Identifies and mitigates malicious prompt injections and jailbreak attempts in real-time.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://rectitude-ai-prompt-guard.vercel.app/",
+    stack: ["Python", "FastAPI", "React", "OpenAI API"]
+  },
+  {
+    id: 8,
+    title: "TRAMS ASSIGNMENT",
+    overview: "(Frontend Demo) A responsive and modern frontend implementation showcasing complex layout structuring and state management.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://trams-assignment-frontend.vercel.app/",
+    stack: ["React", "Tailwind CSS", "Vite"]
+  },
+  {
+    id: 9,
+    title: "STEPCODE LANDING",
+    overview: "(Frontend Demo) High-conversion landing page for the StepCode learning platform featuring fluid scroll animations.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://step-code-landing-page.vercel.app/",
+    stack: ["React", "GSAP", "Tailwind CSS"]
+  },
+  {
+    id: 10,
+    title: "MEDIC MOCHA",
+    overview: "(Frontend Demo) A sleek client-facing dashboard and landing interface for a medical and healthcare startup.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://medic-client-mocha.vercel.app/",
+    stack: ["React", "Next.js", "Tailwind CSS"]
+  },
+  {
+    id: 11,
+    title: "STEPCODE NEW",
+    overview: "(Frontend Demo) The next-generation iteration of the StepCode landing page, incorporating an updated brand identity and aesthetics.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://step-code-landing-new.vercel.app/",
+    stack: ["React", "GSAP", "Framer Motion", "Tailwind CSS"]
   }
 ];
 
