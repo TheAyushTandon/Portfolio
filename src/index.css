@@ -355,8 +355,8 @@ body {
 .contact-split {
   display: flex; 
   flex-wrap: wrap; 
-  gap: 6rem; 
-  align-items: stretch; 
+  gap: 4rem; 
+  align-items: flex-start; 
   padding: 0 2vw 10rem 2vw;
 }
 
@@ -428,7 +428,7 @@ body {
   padding: 3rem;
   transform: skewX(-5deg);
   position: relative;
-  height: 100%;
+  height: auto;
 }
 .contact-bio-title {
   font-size: 4rem;
@@ -447,7 +447,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 25px;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 2rem;
 }
 
 /* Click Animation Elements */
