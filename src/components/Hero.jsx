@@ -57,7 +57,7 @@ export default function Hero({ onNavigate }) {
         <img 
           ref={heroImgRef}
           src="/hero.webp" 
-          alt="Hero"
+          alt="Ayush Tandon - Full-Stack Software Developer and AI Builder"
           className="hero-img"
           fetchPriority="high"
         />

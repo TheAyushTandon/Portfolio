@@ -158,14 +158,14 @@ export default function Certifications({ onNavigate }) {
 
   const getLogoUrl = (org) => {
     switch(org) {
-      case "Amazon Web Services (AWS)": return "https://icon.horse/icon/aws.amazon.com";
-      case "Coursera": return "https://icon.horse/icon/coursera.org";
-      case "IBM": return "https://icon.horse/icon/ibm.com";
-      case "Google": return "https://icon.horse/icon/google.com";
+      case "Amazon Web Services (AWS)": return "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg";
+      case "Coursera": return "https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg";
+      case "IBM": return "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg";
+      case "Google": return "https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg";
       case "Packt": return "https://upload.wikimedia.org/wikipedia/commons/d/d7/Packt-Logo.png";
-      case "HEC Paris": return "https://icon.horse/icon/hec.edu";
-      case "United Latino Students Association": return "https://icon.horse/icon/coursera.org";
-      default: return "https://icon.horse/icon/coursera.org";
+      case "HEC Paris": return "https://upload.wikimedia.org/wikipedia/en/5/5f/HEC_Paris_logo.svg";
+      case "United Latino Students Association": return "https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg";
+      default: return "https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg";
     }
   };
 
