@@ -163,7 +163,7 @@ export default function Certifications({ onNavigate }) {
       case "IBM": return "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg";
       case "Google": return "https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg";
       case "Packt": return "https://upload.wikimedia.org/wikipedia/commons/d/d7/Packt-Logo.png";
-      case "HEC Paris": return "https://upload.wikimedia.org/wikipedia/en/5/5f/HEC_Paris_logo.svg";
+      case "HEC Paris": return "https://cdn.brandfetch.io/idMQhopUzM/w/567/h/254/theme/dark/idCcwoQvLn.png?c=1dxbfHSJFAPEGdCLU4o5B";
       case "United Latino Students Association": return "https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg";
       default: return "https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg";
     }
