@@ -88,16 +88,29 @@ export default function Contact({ onNavigate }) {
         <div className="contact-stack">
           
           {/* 1. Target Dossier */}
-          <div className="contact-bio-box" style={{ width: '100%' }}>
-            <h2 className="font-p5 text-p5-white contact-bio-title">
-              TARGET DOSSIER
-            </h2>
-            <div className="contact-bio-inner">
-              <p style={{ fontFamily: 'Roboto', fontSize: '1.4rem', lineHeight: 1.6, margin: 0 }}>
-                I like to design and automate things, solving real-life problems. I also love to try new food and enjoy sports. 
-                <br/><br/>
-                <span style={{ color: 'var(--red)', fontWeight: 'bold' }}>CURRENT STATUS:</span> 3rd year of B.Tech CSE.
-              </p>
+          <div style={{ position: 'relative', width: '100%', padding: '2rem 0' }} className="contact-dossier-card">
+            
+            {/* Background layered polygons for chaos */}
+            <div style={{ position: 'absolute', top: 0, left: '-2%', width: '104%', height: '105%', backgroundColor: 'var(--black)', clipPath: 'polygon(2% 0, 100% 5%, 98% 100%, 0 95%)', zIndex: 0 }}></div>
+            <div style={{ position: 'absolute', top: '2%', left: '1%', width: '98%', height: '96%', backgroundColor: 'var(--red)', clipPath: 'polygon(0 4%, 100% 0, 96% 100%, 4% 96%)', zIndex: 1 }}></div>
+            
+            <div style={{ position: 'relative', zIndex: 2, padding: '3rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+              
+              <div style={{ alignSelf: 'flex-start', backgroundColor: 'var(--white)', padding: '0.5rem 1.5rem', border: '4px solid var(--black)', transform: 'rotate(-3deg) skewX(-10deg)', boxShadow: '8px 8px 0px var(--black)' }}>
+                <h2 className="font-p5 text-p5-red" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', margin: 0, lineHeight: 1 }}>
+                  TARGET DOSSIER
+                </h2>
+              </div>
+              
+              <div style={{ backgroundColor: 'var(--white)', color: 'var(--black)', padding: '2.5rem', border: '5px solid var(--black)', transform: 'rotate(1deg)', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.1)' }}>
+                <p style={{ fontFamily: 'Roboto', fontSize: '1.4rem', lineHeight: 1.6, margin: 0, fontWeight: 'bold' }}>
+                  I like to design and automate things, solving real-life problems. I also love to try new food and enjoy sports. 
+                  <br/><br/>
+                  <span style={{ color: 'var(--red)', fontWeight: '900', fontSize: '1.6rem', textTransform: 'uppercase', display: 'inline-block', transform: 'skewX(-10deg)' }}>CURRENT STATUS:</span> 
+                  <span style={{ marginLeft: '10px' }}>3rd year of B.Tech CSE.</span>
+                </p>
+              </div>
+
             </div>
           </div>
 
@@ -142,50 +155,65 @@ export default function Contact({ onNavigate }) {
           </div>
 
           {/* 3. Send Calling Card Form */}
-          <div className="contact-bio-box" style={{ backgroundColor: 'var(--black)', width: '100%' }}>
-            <h2 className="font-p5 text-p5-white contact-bio-title" style={{ backgroundColor: 'var(--red)', color: 'var(--white)' }}>
-              SEND CALLING CARD (EMAIL)
-            </h2>
-            <div className="contact-bio-inner" style={{ backgroundColor: 'var(--white)' }}>
-              <form 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.target);
-                  const msg = formData.get('message');
-                  const name = formData.get('name');
-                  window.location.href = `mailto:TheAyushTandon@gmail.com?subject=Message from ${name}&body=${encodeURIComponent(msg)}`;
-                }}
-                style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-              >
-                <input 
-                  name="name"
-                  type="text" 
-                  placeholder="YOUR NAME" 
-                  required
-                  style={{
-                    border: '3px solid var(--black)', padding: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', fontSize: '1.2rem', boxShadow: '4px 4px 0px var(--black)', outline: 'none'
+          <div style={{ position: 'relative', width: '100%', padding: '2rem 0', marginTop: '2rem' }} className="contact-form-card">
+            
+            <div style={{ position: 'absolute', top: 0, left: '-2%', width: '104%', height: '105%', backgroundColor: 'var(--red)', clipPath: 'polygon(0 0, 98% 3%, 100% 97%, 2% 100%)', zIndex: 0 }}></div>
+            <div style={{ position: 'absolute', top: '2%', left: '1%', width: '98%', height: '96%', backgroundColor: 'var(--black)', clipPath: 'polygon(3% 2%, 100% 0, 97% 98%, 0 100%)', zIndex: 1 }}></div>
+            
+            <div style={{ position: 'relative', zIndex: 2, padding: '3rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+              
+              <div style={{ alignSelf: 'center', backgroundColor: 'var(--red)', padding: '0.8rem 2.5rem', border: '4px solid var(--white)', transform: 'rotate(2deg) skewX(-15deg)', boxShadow: '8px 8px 0px var(--black)' }}>
+                <h2 className="font-p5 text-p5-white" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', margin: 0, lineHeight: 1, textShadow: '4px 4px 0px var(--black)' }}>
+                  SEND CALLING CARD (EMAIL)
+                </h2>
+              </div>
+              
+              <div style={{ backgroundColor: 'var(--white)', padding: '2.5rem', border: '4px dashed var(--black)', transform: 'rotate(-1deg)' }}>
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.target);
+                    const msg = formData.get('message');
+                    const name = formData.get('name');
+                    window.location.href = `mailto:TheAyushTandon@gmail.com?subject=Message from ${name}&body=${encodeURIComponent(msg)}`;
                   }}
-                />
-                <textarea 
-                  name="message"
-                  placeholder="YOUR MESSAGE" 
-                  required
-                  rows={4}
-                  style={{
-                    border: '3px solid var(--black)', padding: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', fontSize: '1.2rem', boxShadow: '4px 4px 0px var(--black)', outline: 'none', resize: 'vertical'
-                  }}
-                />
-                <button 
-                  type="submit"
-                  style={{
-                    backgroundColor: 'var(--red)', color: 'var(--white)', border: '4px solid var(--black)', padding: '0.8rem', fontFamily: 'Anton', fontSize: '1.5rem', cursor: 'pointer', boxShadow: '6px 6px 0px var(--black)', transition: 'all 0.1s ease', marginTop: '0.5rem'
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '8px 8px 0px var(--black)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '6px 6px 0px var(--black)'; }}
+                  style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
                 >
-                  SEND MESSAGE
-                </button>
-              </form>
+                  <input 
+                    name="name"
+                    type="text" 
+                    placeholder="YOUR NAME" 
+                    required
+                    style={{
+                      border: '4px solid var(--black)', padding: '1rem', fontFamily: 'Roboto', fontWeight: 'bold', fontSize: '1.3rem', boxShadow: '6px 6px 0px var(--black)', outline: 'none', backgroundColor: '#f4f4f4', transform: 'skewX(-2deg)', transition: 'all 0.2s ease'
+                    }}
+                    onFocus={(e) => { e.currentTarget.style.backgroundColor = 'var(--white)'; e.currentTarget.style.transform = 'skewX(-2deg) scale(1.02)'; }}
+                    onBlur={(e) => { e.currentTarget.style.backgroundColor = '#f4f4f4'; e.currentTarget.style.transform = 'skewX(-2deg)'; }}
+                  />
+                  <textarea 
+                    name="message"
+                    placeholder="YOUR MESSAGE" 
+                    required
+                    rows={4}
+                    style={{
+                      border: '4px solid var(--black)', padding: '1rem', fontFamily: 'Roboto', fontWeight: 'bold', fontSize: '1.3rem', boxShadow: '6px 6px 0px var(--black)', outline: 'none', resize: 'vertical', backgroundColor: '#f4f4f4', transform: 'skewX(1deg)', transition: 'all 0.2s ease'
+                    }}
+                    onFocus={(e) => { e.currentTarget.style.backgroundColor = 'var(--white)'; e.currentTarget.style.transform = 'skewX(1deg) scale(1.02)'; }}
+                    onBlur={(e) => { e.currentTarget.style.backgroundColor = '#f4f4f4'; e.currentTarget.style.transform = 'skewX(1deg)'; }}
+                  />
+                  <button 
+                    type="submit"
+                    style={{
+                      backgroundColor: 'var(--red)', color: 'var(--white)', border: '4px solid var(--black)', padding: '1rem 3rem', fontFamily: 'Anton', fontSize: '1.8rem', cursor: 'url(/cursor.svg) 11 6, pointer', boxShadow: '8px 8px 0px var(--black)', transition: 'all 0.1s ease', marginTop: '1rem', alignSelf: 'flex-end', transform: 'skewX(-10deg)'
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px) skewX(-10deg) scale(1.05)'; e.currentTarget.style.boxShadow = '10px 10px 0px var(--black)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'skewX(-10deg)'; e.currentTarget.style.boxShadow = '8px 8px 0px var(--black)'; }}
+                  >
+                    SEND MESSAGE
+                  </button>
+                </form>
+              </div>
+
             </div>
           </div>
 

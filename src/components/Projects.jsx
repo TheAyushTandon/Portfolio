@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Code } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const GithubIcon = ({ size = 20, strokeWidth = 2 }) => (
   <svg 
