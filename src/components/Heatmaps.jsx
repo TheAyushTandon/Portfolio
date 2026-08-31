@@ -52,43 +52,32 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
   const ENTER_STEP_S = 0.014;
 
   // Get months header
-  const getMonthsHeader = () => {
-    const headers = [];
-    let lastMonth = "";
-    weeks.forEach((week, colIdx) => {
-      const validDay = week.find((day) => day.date !== "");
-      if (validDay) {
-        const dateObj = new Date(validDay.date);
-        const monthName = dateObj.toLocaleString("default", { month: "short" });
-        if (monthName !== lastMonth) {
-          headers.push({ text: monthName, index: colIdx });
-          lastMonth = monthName;
+  const monthLabels = Array(weeks.length).fill("");
+  let lastMonth = "";
+  let lastPushedIndex = -10;
+  
+  weeks.forEach((week, colIdx) => {
+    const validDay = week.find((day) => day.date !== "");
+    if (validDay) {
+      const dateObj = new Date(validDay.date);
+      const monthName = dateObj.toLocaleString("default", { month: "short" });
+      if (monthName !== lastMonth) {
+        if (colIdx - lastPushedIndex > 3) {
+          monthLabels[colIdx] = monthName;
+          lastPushedIndex = colIdx;
         }
+        lastMonth = monthName;
       }
-    });
-    const resultSpans = Array(weeks.length).fill("");
-    headers.forEach((h) => { if (h.index < resultSpans.length) resultSpans[h.index] = h.text; });
-    return resultSpans;
-  };
-
-  const monthSpans = getMonthsHeader();
+    }
+  });
 
   return (
     <div style={{ position: 'relative' }}>
       <div style={{ overflowX: 'auto', paddingBottom: '1rem', overflowY: 'hidden' }}>
         
-        {/* Months Header */}
-        <div style={{ display: 'flex', minWidth: 'max-content', marginBottom: '8px', marginLeft: '30px' }}>
-          {monthSpans.map((text, idx) => (
-            <span key={idx} style={{ width: '18px', display: 'inline-block', fontSize: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', color: 'var(--black)', flexShrink: 0 }}>
-              {text}
-            </span>
-          ))}
-        </div>
-
         <div style={{ display: 'flex', minWidth: 'max-content' }}>
           {/* Days Y-axis */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginRight: '8px', marginTop: '2px', fontSize: '0.75rem', fontFamily: 'Roboto', fontWeight: 'bold', color: 'var(--black)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginRight: '8px', marginTop: '22px', fontSize: '0.75rem', fontFamily: 'Roboto', fontWeight: 'bold', color: 'var(--black)', textAlign: 'right' }}>
             <span style={{ height: '14px' }}></span>
             <span style={{ height: '14px', lineHeight: '14px' }}>Mon</span>
             <span style={{ height: '14px' }}></span>
@@ -106,6 +95,12 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
 
               return (
                 <div key={colIdx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {/* Month Label */}
+                  <div style={{ height: '14px', marginBottom: '4px', position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: 0, fontSize: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', color: 'var(--black)', whiteSpace: 'nowrap', zIndex: 5 }}>
+                      {monthLabels[colIdx]}
+                    </span>
+                  </div>
                   {week.map((day, rowIdx) => {
                     const cellColor = colors[day.level] || colors[0];
                     const dateLabel = day.date
