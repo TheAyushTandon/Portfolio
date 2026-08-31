@@ -48,9 +48,12 @@ const generateEmptyCalendarForYear = (year) => {
 export default function Heatmaps({ onNavigate }) {
   const containerRef = useRef(null);
   const [githubUser, setGithubUser] = useState("TheAyushTandon");
+  const [leetcodeUser, setLeetcodeUser] = useState("TheAyushTandon");
   const [weeks, setWeeks] = useState([]);
+  const [lcWeeks, setLcWeeks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState({ total: 0, activeDays: 0, streak: 0 });
+  const [lcStats, setLcStats] = useState({ total: 0, activeDays: 0, streak: 0 });
 
   const colors = ["var(--black)", "#4a0000", "#8a0000", "#cc0000", "var(--red)"];
 
@@ -67,39 +70,39 @@ export default function Heatmaps({ onNavigate }) {
   const loadData = async () => {
     setLoading(true);
     // Simulate API call for now until backend is connected
-    // In production, this would hit: fetch(`${import.meta.env.VITE_API_URL}/api/github/heatmap/${githubUser}`)
     setTimeout(() => {
-      // Mock data processing for demo purposes, since we don't have the backend up
-      const mockWeeks = generateEmptyCalendarForYear(null);
-      let total = 0;
-      let active = 0;
-      let streak = 0;
-      let currentStreak = 0;
+      // GitHub
+      const ghMockWeeks = generateEmptyCalendarForYear(null);
+      let ghTotal = 0, ghActive = 0, ghStreak = 0, ghCur = 0;
+      const ghPopulated = ghMockWeeks.map(week => week.map(day => {
+        const hasCount = Math.random() > 0.7;
+        const count = hasCount ? Math.floor(Math.random() * 10) + 1 : 0;
+        let level = 0;
+        if (count > 0) {
+          if (count <= 2) level = 1; else if (count <= 5) level = 2; else if (count <= 9) level = 3; else level = 4;
+          ghActive++; ghTotal += count; ghCur++; if (ghCur > ghStreak) ghStreak = ghCur;
+        } else ghCur = 0;
+        return { ...day, count, level };
+      }));
+      setWeeks(ghPopulated);
+      setStats({ total: ghTotal, activeDays: ghActive, streak: ghStreak });
 
-      const populatedWeeks = mockWeeks.map(week => 
-        week.map(day => {
-          // Randomly generate some contributions
-          const hasCount = Math.random() > 0.7;
-          const count = hasCount ? Math.floor(Math.random() * 10) + 1 : 0;
-          let level = 0;
-          if (count > 0) {
-            if (count <= 2) level = 1;
-            else if (count <= 5) level = 2;
-            else if (count <= 9) level = 3;
-            else level = 4;
-            active++;
-            total += count;
-            currentStreak++;
-            if(currentStreak > streak) streak = currentStreak;
-          } else {
-            currentStreak = 0;
-          }
-          return { ...day, count, level };
-        })
-      );
+      // LeetCode
+      const lcMockWeeks = generateEmptyCalendarForYear(null);
+      let lcTotal = 0, lcActive = 0, lcStreak = 0, lcCur = 0;
+      const lcPopulated = lcMockWeeks.map(week => week.map(day => {
+        const hasCount = Math.random() > 0.8;
+        const count = hasCount ? Math.floor(Math.random() * 5) + 1 : 0;
+        let level = 0;
+        if (count > 0) {
+          if (count <= 1) level = 1; else if (count <= 2) level = 2; else if (count <= 3) level = 3; else level = 4;
+          lcActive++; lcTotal += count; lcCur++; if (lcCur > lcStreak) lcStreak = lcCur;
+        } else lcCur = 0;
+        return { ...day, count, level };
+      }));
+      setLcWeeks(lcPopulated);
+      setLcStats({ total: lcTotal, activeDays: lcActive, streak: lcStreak });
       
-      setWeeks(populatedWeeks);
-      setStats({ total, activeDays: active, streak });
       setLoading(false);
     }, 1000);
   };
@@ -215,6 +218,98 @@ export default function Heatmaps({ onNavigate }) {
                     <div 
                       key={dIdx} 
                       title={`${day.count} contributions on ${day.date}`}
+                      style={{
+                        width: '14px',
+                        height: '14px',
+                        backgroundColor: colors[day.level],
+                        border: day.level === 0 ? '1px solid rgba(0,0,0,0.1)' : '1px solid var(--black)',
+                        transform: day.level > 0 ? 'skewX(-5deg)' : 'none',
+                        transition: 'transform 0.2s ease, background-color 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.5) skewX(-5deg)';
+                        e.currentTarget.style.zIndex = 10;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = day.level > 0 ? 'skewX(-5deg)' : 'none';
+                        e.currentTarget.style.zIndex = 1;
+                      }}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* LeetCode Card */}
+        <div className="heatmap-card" style={{
+          backgroundColor: 'var(--white)',
+          border: '6px solid var(--black)',
+          boxShadow: '15px 15px 0px var(--red)',
+          padding: '2rem',
+          position: 'relative',
+          maxWidth: '1200px',
+          margin: '3rem auto 0 auto',
+          width: '100%'
+        }}>
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <h2 className="font-p5" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0', color: 'var(--black)' }}>LEETCODE ACTIVITY</h2>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                <div style={{ backgroundColor: 'var(--black)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
+                  TOTAL: {lcStats.total}
+                </div>
+                <div style={{ backgroundColor: 'var(--red)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
+                  STREAK: {lcStats.streak} DAYS
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <input 
+                type="text" 
+                value={leetcodeUser}
+                onChange={(e) => setLeetcodeUser(e.target.value)}
+                style={{
+                  border: '3px solid var(--black)',
+                  padding: '0.5rem 1rem',
+                  fontFamily: 'Roboto',
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  outline: 'none',
+                  boxShadow: '4px 4px 0px var(--black)'
+                }}
+              />
+              <button 
+                onClick={loadData}
+                style={{
+                  backgroundColor: 'var(--black)',
+                  color: 'var(--white)',
+                  border: '3px solid var(--black)',
+                  padding: '0.5rem 1.5rem',
+                  fontFamily: 'Anton',
+                  fontSize: '1.2rem',
+                  cursor: 'pointer',
+                  boxShadow: '4px 4px 0px var(--red)',
+                  transition: 'all 0.1s ease'
+                }}
+              >
+                {loading ? 'LOADING...' : 'GENERATE'}
+              </button>
+            </div>
+          </div>
+
+          <div style={{ overflowX: 'auto', paddingBottom: '1rem' }}>
+            <div style={{ display: 'flex', gap: '4px', minWidth: 'max-content' }}>
+              {lcWeeks.map((week, wIdx) => (
+                <div key={wIdx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {week.map((day, dIdx) => (
+                    <div 
+                      key={dIdx} 
+                      title={`${day.count} submissions on ${day.date}`}
                       style={{
                         width: '14px',
                         height: '14px',
