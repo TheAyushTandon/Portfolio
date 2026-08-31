@@ -47,8 +47,17 @@ const generateEmptyCalendarForYear = (year) => {
 
 // Reusable Heatmap Grid with original wave animation logic
 const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
-  const colors = ["#111111", "#800000", "#cc0000", "#ff0000", "#ff4d4d"];
-  const activeColor = "var(--red)";
+  let colors, activeColor;
+  if (type === "github") {
+    colors = ["#111111", "#0e4429", "#006d32", "#26a641", "#39d353"];
+    activeColor = "#39d353";
+  } else if (type === "leetcode") {
+    colors = ["#111111", "#5c4000", "#996a00", "#d69300", "#ffa116"];
+    activeColor = "#ffa116";
+  } else {
+    colors = ["#111111", "#800000", "#cc0000", "#ff0000", "#ff4d4d"];
+    activeColor = "var(--red)";
+  }
   const ENTER_STEP_S = 0.014;
 
   // Get months header
