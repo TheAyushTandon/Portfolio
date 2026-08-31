@@ -130,7 +130,7 @@ function ProjectCard({ project, index, onOpenStack }) {
         const effectiveLeft = isDesktop ? isLeft : true; 
         
         // Initial setup
-        gsap.set(detailsRef.current, { y: -30, opacity: 0 });
+        gsap.set(detailsRef.current, { y: -80, opacity: 0 });
         gsap.set(armsRef.current, { x: effectiveLeft ? -50 : 50, opacity: 0, pointerEvents: 'none' });
 
         const tl = gsap.timeline({
@@ -145,8 +145,8 @@ function ProjectCard({ project, index, onOpenStack }) {
         tl.to(detailsRef.current, { 
              y: 0, 
              opacity: 1, 
-             duration: 0.3, 
-             ease: 'power3.out' 
+             duration: 0.5, 
+             ease: 'back.out(1.2)' 
         })
         .to(armsRef.current, { 
              x: 0, 
