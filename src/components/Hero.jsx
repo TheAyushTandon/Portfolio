@@ -33,7 +33,7 @@ export default function Hero({ onNavigate }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const menuItems = ["PROJECTS", "EXPERIENCE", "CERTIFICATIONS", "CONTACT"];
+  const menuItems = ["PROJECTS", "EXPERIENCE", "CERTIFICATIONS", "HEATMAPS", "CONTACT"];
 
   return (
     <div ref={containerRef} className="absolute-fill" style={{ overflow: 'hidden' }}>
