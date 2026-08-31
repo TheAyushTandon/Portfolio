@@ -62,7 +62,7 @@ export default function Contact({ onNavigate }) {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4rem', flexWrap: 'wrap', gap: '2rem' }}>
           <h1 className="font-p5 text-p5-red" style={{ fontSize: 'clamp(4rem, 8vw, 8rem)', transform: 'skewX(-10deg)', textShadow: '6px 6px 0px var(--black)', margin: 0, lineHeight: 1 }}>
-            CALLING CARD
+            CONTACT ME
           </h1>
           
           <div 
@@ -79,7 +79,7 @@ export default function Contact({ onNavigate }) {
             }}
           >
             <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
-              <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>▶</span> BACK TO HQ
+              <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>▶</span> BACK TO HOME
             </h2>
           </div>
         </div>
@@ -98,7 +98,7 @@ export default function Contact({ onNavigate }) {
               
               <div style={{ alignSelf: 'flex-start', backgroundColor: 'var(--white)', padding: '0.5rem 1.5rem', border: '4px solid var(--black)', transform: 'rotate(-3deg) skewX(-10deg)', boxShadow: '8px 8px 0px var(--black)' }}>
                 <h2 className="font-p5 text-p5-red" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', margin: 0, lineHeight: 1 }}>
-                  TARGET DOSSIER
+                  ABOUT ME
                 </h2>
               </div>
               
@@ -164,7 +164,7 @@ export default function Contact({ onNavigate }) {
               
               <div style={{ alignSelf: 'center', backgroundColor: 'var(--red)', padding: '0.8rem 2.5rem', border: '4px solid var(--white)', transform: 'rotate(2deg) skewX(-15deg)', boxShadow: '8px 8px 0px var(--black)' }}>
                 <h2 className="font-p5 text-p5-white" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', margin: 0, lineHeight: 1, textShadow: '4px 4px 0px var(--black)' }}>
-                  SEND CALLING CARD (EMAIL)
+                  SEND AN EMAIL
                 </h2>
               </div>
               

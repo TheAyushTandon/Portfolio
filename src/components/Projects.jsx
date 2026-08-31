@@ -178,7 +178,7 @@ function ProjectCard({ project, index, onOpenStack }) {
       <div 
         className="project-content-wrapper"
       >
-        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', flex: 1 }}>
           
           <div 
             className="menu-item-box force-active" 
@@ -287,7 +287,7 @@ export default function Projects({ onNavigate }) {
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '5rem', flexWrap: 'wrap', gap: '2rem' }}>
           <h1 className="font-p5 text-p5-red" style={{ fontSize: 'clamp(4rem, 8vw, 8rem)', transform: 'skewX(-10deg)', textShadow: '6px 6px 0px var(--black)', margin: 0, lineHeight: 1 }}>
-            PROJECTS PALACE
+            PROJECTS
           </h1>
           
           <div 
@@ -304,7 +304,7 @@ export default function Projects({ onNavigate }) {
             }}
           >
             <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
-              <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>▶</span> BACK TO HQ
+              <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>▶</span> BACK TO HOME
             </h2>
           </div>
         </div>
