@@ -49,13 +49,13 @@ const generateEmptyCalendarForYear = (year) => {
 const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
   let colors, activeColor;
   if (type === "github") {
-    colors = ["#111111", "#0e4429", "#006d32", "#26a641", "#39d353"];
-    activeColor = "#39d353";
+    colors = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
+    activeColor = "#216e39";
   } else if (type === "leetcode") {
-    colors = ["#111111", "#5c4000", "#996a00", "#d69300", "#ffa116"];
-    activeColor = "#ffa116";
+    colors = ["#ebedf0", "#ffe1b3", "#ffc373", "#ffa633", "#ff8800"];
+    activeColor = "#ff8800";
   } else {
-    colors = ["#111111", "#800000", "#cc0000", "#ff0000", "#ff4d4d"];
+    colors = ["#ebedf0", "#ffb3b3", "#ff6666", "#cc0000", "#990000"];
     activeColor = "var(--red)";
   }
   const ENTER_STEP_S = 0.014;
@@ -125,7 +125,8 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
                           width: '14px',
                           height: '14px',
                           backgroundColor: cellColor,
-                          border: day.level === 0 ? '1px solid rgba(0,0,0,0.1)' : '1px solid var(--black)',
+                          border: day.level === 0 ? '1px solid rgba(0,0,0,0.05)' : '1px solid rgba(0,0,0,0.15)',
+                          borderRadius: '3px',
                           transform: day.level > 0 ? 'skewX(-5deg)' : 'none',
                           transition: 'transform 0.2s ease, background-color 0.2s ease',
                           animation: `waveEnter 0.4s ease forwards`,
@@ -165,7 +166,8 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
                 width: '14px',
                 height: '14px',
                 backgroundColor: color,
-                border: idx === 0 ? '1px solid rgba(0,0,0,0.1)' : '1px solid var(--black)',
+                border: idx === 0 ? '1px solid rgba(0,0,0,0.05)' : '1px solid rgba(0,0,0,0.15)',
+                borderRadius: '3px',
                 transform: idx > 0 ? 'skewX(-5deg)' : 'none'
               }}
             />
