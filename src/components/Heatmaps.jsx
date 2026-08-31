@@ -45,66 +45,258 @@ const generateEmptyCalendarForYear = (year) => {
   return weeks;
 };
 
+// Reusable Heatmap Grid with original wave animation logic
+const HeatmapGrid = ({ weeks, type, direction = "ltr" }) => {
+  const [tooltip, setTooltip] = useState({ content: "", x: 0, y: 0, visible: false, color: "" });
+  
+  const colors = ["var(--black)", "#4a0000", "#8a0000", "#cc0000", "var(--red)"];
+  const activeColor = "var(--red)";
+  const ENTER_STEP_S = 0.014;
+
+  const handleHoverCell = (e, text, color) => {
+    setTooltip({ content: text, x: e.clientX, y: e.clientY, visible: true, color });
+  };
+  const handleLeaveCell = () => setTooltip(prev => ({ ...prev, visible: false }));
+
+  // Get months header
+  const getMonthsHeader = () => {
+    const headers = [];
+    let lastMonth = "";
+    weeks.forEach((week, colIdx) => {
+      const validDay = week.find((day) => day.date !== "");
+      if (validDay) {
+        const dateObj = new Date(validDay.date);
+        const monthName = dateObj.toLocaleString("default", { month: "short" });
+        if (monthName !== lastMonth) {
+          headers.push({ text: monthName, index: colIdx });
+          lastMonth = monthName;
+        }
+      }
+    });
+    const resultSpans = Array(weeks.length).fill("");
+    headers.forEach((h) => { if (h.index < resultSpans.length) resultSpans[h.index] = h.text; });
+    return resultSpans;
+  };
+
+  const monthSpans = getMonthsHeader();
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <div style={{ overflowX: 'auto', paddingBottom: '1rem', overflowY: 'hidden' }}>
+        
+        {/* Months Header */}
+        <div style={{ display: 'flex', minWidth: 'max-content', marginBottom: '8px', marginLeft: '30px' }}>
+          {monthSpans.map((text, idx) => (
+            <span key={idx} style={{ width: '18px', display: 'inline-block', fontSize: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', color: 'var(--black)', flexShrink: 0 }}>
+              {text}
+            </span>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', minWidth: 'max-content' }}>
+          {/* Days Y-axis */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginRight: '8px', marginTop: '2px', fontSize: '0.75rem', fontFamily: 'Roboto', fontWeight: 'bold', color: 'var(--black)' }}>
+            <span style={{ height: '14px' }}></span>
+            <span style={{ height: '14px', lineHeight: '14px' }}>Mon</span>
+            <span style={{ height: '14px' }}></span>
+            <span style={{ height: '14px', lineHeight: '14px' }}>Wed</span>
+            <span style={{ height: '14px' }}></span>
+            <span style={{ height: '14px', lineHeight: '14px' }}>Fri</span>
+            <span style={{ height: '14px' }}></span>
+          </div>
+
+          <div style={{ display: 'flex', gap: '4px' }}>
+            {weeks.map((week, colIdx) => {
+              const totalCols = weeks.length;
+              const waveCol = direction === "rtl" ? (totalCols - 1 - colIdx) : colIdx;
+              const delay = waveCol * ENTER_STEP_S;
+
+              return (
+                <div key={colIdx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  {week.map((day, rowIdx) => {
+                    const cellColor = colors[day.level] || colors[0];
+                    const dateLabel = day.date
+                      ? new Date(day.date).toLocaleDateString(undefined, { weekday: "short", year: "numeric", month: "short", day: "numeric" })
+                      : "";
+                    const hoverText = `${day.count} ${type === "github" ? "contributions" : "submissions"} on ${dateLabel}`;
+
+                    return (
+                      <div 
+                        key={rowIdx} 
+                        className="heatmap-cell"
+                        style={{
+                          width: '14px',
+                          height: '14px',
+                          backgroundColor: cellColor,
+                          border: day.level === 0 ? '1px solid rgba(0,0,0,0.1)' : '1px solid var(--black)',
+                          transform: day.level > 0 ? 'skewX(-5deg)' : 'none',
+                          transition: 'transform 0.2s ease, background-color 0.2s ease',
+                          animation: `waveEnter 0.4s ease forwards`,
+                          animationDelay: `${delay}s`,
+                          opacity: 0,
+                          transformOrigin: 'bottom left'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.5) skewX(-5deg)';
+                          e.currentTarget.style.zIndex = 10;
+                          handleHoverCell(e, hoverText, activeColor);
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = day.level > 0 ? 'skewX(-5deg)' : 'none';
+                          e.currentTarget.style.zIndex = 1;
+                          handleLeaveCell();
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Tooltip */}
+      {tooltip.visible && (
+        <div style={{
+          position: 'fixed',
+          top: tooltip.y - 40,
+          left: tooltip.x,
+          transform: 'translateX(-50%)',
+          backgroundColor: 'var(--black)',
+          color: 'var(--white)',
+          padding: '0.4rem 0.8rem',
+          fontFamily: 'Roboto',
+          fontSize: '0.9rem',
+          fontWeight: 'bold',
+          border: `2px solid ${tooltip.color}`,
+          boxShadow: '4px 4px 0px rgba(0,0,0,0.5)',
+          pointerEvents: 'none',
+          zIndex: 100,
+          whiteSpace: 'nowrap'
+        }}>
+          {tooltip.content}
+        </div>
+      )}
+
+      <style>{`
+        @keyframes waveEnter {
+          from { opacity: 0; transform: scale(0.5) translateY(10px) skewX(-5deg); }
+          to { opacity: 1; transform: scale(1) translateY(0) skewX(-5deg); }
+        }
+        .heatmap-cell {
+          cursor: pointer;
+        }
+      `}</style>
+    </div>
+  );
+};
+
 export default function Heatmaps({ onNavigate }) {
   const containerRef = useRef(null);
-  const [githubUser, setGithubUser] = useState("TheAyushTandon");
-  const [leetcodeUser, setLeetcodeUser] = useState("TheAyushTandon");
-  const [weeks, setWeeks] = useState([]);
-  const [lcWeeks, setLcWeeks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [stats, setStats] = useState({ total: 0, activeDays: 0, streak: 0 });
-  const [lcStats, setLcStats] = useState({ total: 0, activeDays: 0, streak: 0 });
+  
+  // Hardcoded to TheAyushTandon as requested
+  const username = "TheAyushTandon";
+  
+  const [loading, setLoading] = useState(true);
+  
+  const [githubWeeks, setGithubWeeks] = useState(generateEmptyCalendarForYear(null));
+  const [githubStats, setGithubStats] = useState({ total: 0, activeDays: 0, streak: 0 });
+  
+  const [leetcodeWeeks, setLeetcodeWeeks] = useState(generateEmptyCalendarForYear(null));
+  const [leetcodeStats, setLeetcodeStats] = useState({ total: 0, activeDays: 0, streak: 0 });
 
-  const colors = ["var(--black)", "#4a0000", "#8a0000", "#cc0000", "var(--red)"];
+  const apiHost = import.meta.env.VITE_API_URL || "https://stepcode-heatmaps.onrender.com";
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.fromTo('.heatmap-card', 
         { y: 100, opacity: 0, rotation: 2 },
-        { y: 0, opacity: 1, rotation: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: '.heatmap-card', start: "top 80%" } }
+        { y: 0, opacity: 1, rotation: 0, duration: 0.8, stagger: 0.1, ease: "power3.out", scrollTrigger: { trigger: '.heatmap-card', start: "top 85%" } }
       );
     }, containerRef);
     return () => ctx.revert();
   }, []);
 
+  const processGithubData = (data) => {
+    const levelMap = { NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4 };
+    const weeks = data.weeks.map(week => week.contributionDays.map(day => ({
+      date: day.date, count: day.count, level: levelMap[day.level] ?? 0
+    })));
+    let activeDays = 0, currentStreak = 0, maxStreak = 0;
+    weeks.forEach(w => w.forEach(d => {
+      if (d.count > 0) { activeDays++; currentStreak++; if (currentStreak > maxStreak) maxStreak = currentStreak; }
+      else currentStreak = 0;
+    }));
+    setGithubWeeks(weeks);
+    setGithubStats({ total: data.totalContributions, activeDays, streak: maxStreak });
+  };
+
+  const processLeetcodeData = (data) => {
+    const map = data.submission_calendar || {};
+    let totalSubmissions = 0;
+    Object.values(map).forEach(v => totalSubmissions += Number(v));
+    const entries = Object.entries(map);
+    const activeDays = entries.filter(([_, count]) => count > 0).length;
+    
+    const dateMap = {};
+    entries.forEach(([ts, count]) => {
+      const dStr = new Date(Number(ts) * 1000).toISOString().split("T")[0];
+      dateMap[dStr] = Number(count);
+    });
+
+    let calendarStart; let totalDays;
+    const today = new Date();
+    const oneYearAgo = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate() - 364));
+    const startDayOfWeek = oneYearAgo.getUTCDay();
+    calendarStart = new Date(oneYearAgo);
+    calendarStart.setUTCDate(oneYearAgo.getUTCDate() - startDayOfWeek);
+    totalDays = 371;
+
+    const weeks = [];
+    let currentWeek = [];
+    let currentStreak = 0, maxStreak = 0;
+    const loopDate = new Date(calendarStart);
+    for (let i = 0; i < totalDays; i++) {
+      const dStr = loopDate.toISOString().split("T")[0];
+      const count = dateMap[dStr] || 0;
+      let lvl = 0;
+      if (count > 0) { if (count <= 2) lvl = 1; else if (count <= 4) lvl = 2; else if (count <= 7) lvl = 3; else lvl = 4; }
+      currentWeek.push({ date: dStr, count, level: lvl });
+      if (count > 0) { currentStreak++; if (currentStreak > maxStreak) maxStreak = currentStreak; } else currentStreak = 0;
+      if (currentWeek.length === 7) { weeks.push([...currentWeek]); currentWeek = []; }
+      loopDate.setDate(loopDate.getDate() + 1);
+    }
+    setLeetcodeWeeks(weeks);
+    setLeetcodeStats({ total: totalSubmissions, activeDays, streak: maxStreak });
+  };
+
   const loadData = async () => {
     setLoading(true);
-    // Simulate API call for now until backend is connected
-    setTimeout(() => {
-      // GitHub
-      const ghMockWeeks = generateEmptyCalendarForYear(null);
-      let ghTotal = 0, ghActive = 0, ghStreak = 0, ghCur = 0;
-      const ghPopulated = ghMockWeeks.map(week => week.map(day => {
-        const hasCount = Math.random() > 0.7;
-        const count = hasCount ? Math.floor(Math.random() * 10) + 1 : 0;
-        let level = 0;
-        if (count > 0) {
-          if (count <= 2) level = 1; else if (count <= 5) level = 2; else if (count <= 9) level = 3; else level = 4;
-          ghActive++; ghTotal += count; ghCur++; if (ghCur > ghStreak) ghStreak = ghCur;
-        } else ghCur = 0;
-        return { ...day, count, level };
-      }));
-      setWeeks(ghPopulated);
-      setStats({ total: ghTotal, activeDays: ghActive, streak: ghStreak });
 
-      // LeetCode
-      const lcMockWeeks = generateEmptyCalendarForYear(null);
-      let lcTotal = 0, lcActive = 0, lcStreak = 0, lcCur = 0;
-      const lcPopulated = lcMockWeeks.map(week => week.map(day => {
-        const hasCount = Math.random() > 0.8;
-        const count = hasCount ? Math.floor(Math.random() * 5) + 1 : 0;
-        let level = 0;
-        if (count > 0) {
-          if (count <= 1) level = 1; else if (count <= 2) level = 2; else if (count <= 3) level = 3; else level = 4;
-          lcActive++; lcTotal += count; lcCur++; if (lcCur > lcStreak) lcStreak = lcCur;
-        } else lcCur = 0;
-        return { ...day, count, level };
-      }));
-      setLcWeeks(lcPopulated);
-      setLcStats({ total: lcTotal, activeDays: lcActive, streak: lcStreak });
+    try {
+      // Parallel fetch for speed
+      const [ghRes, lcRes] = await Promise.all([
+        fetch(`${apiHost}/api/github/heatmap/${username}`),
+        fetch(`${apiHost}/api/leetcode/heatmap/${username}`)
+      ]);
+
+      if (ghRes.ok) {
+        const ghData = await ghRes.json();
+        processGithubData(ghData);
+      }
       
+      if (lcRes.ok) {
+        const lcData = await lcRes.json();
+        if (lcData && lcData.submission_calendar && Object.keys(lcData.submission_calendar).length > 0) {
+          processLeetcodeData(lcData);
+        }
+      }
+    } catch (e) {
+      console.error("Failed to fetch heatmaps", e);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   useEffect(() => {
@@ -151,95 +343,37 @@ export default function Heatmaps({ onNavigate }) {
           </div>
         </div>
 
+        {/* GitHub Card */}
         <div className="heatmap-card" style={{
           backgroundColor: 'var(--white)',
           border: '6px solid var(--black)',
           boxShadow: '15px 15px 0px var(--red)',
           padding: '2rem',
           position: 'relative',
-          maxWidth: '1200px',
-          margin: '0 auto',
+          maxWidth: '1000px',
           width: '100%'
         }}>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <h2 className="font-p5" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0', color: 'var(--black)' }}>GITHUB ACTIVITY</h2>
+              <h2 className="font-p5" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0', color: 'var(--black)' }}>GITHUB TARGET</h2>
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 <div style={{ backgroundColor: 'var(--black)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
-                  TOTAL: {stats.total}
+                  TOTAL: {githubStats.total}
                 </div>
                 <div style={{ backgroundColor: 'var(--red)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
-                  STREAK: {stats.streak} DAYS
+                  STREAK: {githubStats.streak} DAYS
                 </div>
               </div>
             </div>
-
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input 
-                type="text" 
-                value={githubUser}
-                onChange={(e) => setGithubUser(e.target.value)}
-                style={{
-                  border: '3px solid var(--black)',
-                  padding: '0.5rem 1rem',
-                  fontFamily: 'Roboto',
-                  fontWeight: 'bold',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  boxShadow: '4px 4px 0px var(--black)'
-                }}
-              />
-              <button 
-                onClick={loadData}
-                style={{
-                  backgroundColor: 'var(--black)',
-                  color: 'var(--white)',
-                  border: '3px solid var(--black)',
-                  padding: '0.5rem 1.5rem',
-                  fontFamily: 'Anton',
-                  fontSize: '1.2rem',
-                  cursor: 'pointer',
-                  boxShadow: '4px 4px 0px var(--red)',
-                  transition: 'all 0.1s ease'
-                }}
-              >
-                {loading ? 'LOADING...' : 'GENERATE'}
-              </button>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <span style={{ fontFamily: 'Anton', fontSize: '1.2rem', color: 'var(--black)' }}>@{username}</span>
+              <span style={{ fontFamily: 'Roboto', fontSize: '0.9rem', color: 'gray' }}>{loading ? 'FETCHING INTEL...' : 'SYNC COMPLETE'}</span>
             </div>
           </div>
 
-          {/* Grid */}
-          <div style={{ overflowX: 'auto', paddingBottom: '1rem' }}>
-            <div style={{ display: 'flex', gap: '4px', minWidth: 'max-content' }}>
-              {weeks.map((week, wIdx) => (
-                <div key={wIdx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  {week.map((day, dIdx) => (
-                    <div 
-                      key={dIdx} 
-                      title={`${day.count} contributions on ${day.date}`}
-                      style={{
-                        width: '14px',
-                        height: '14px',
-                        backgroundColor: colors[day.level],
-                        border: day.level === 0 ? '1px solid rgba(0,0,0,0.1)' : '1px solid var(--black)',
-                        transform: day.level > 0 ? 'skewX(-5deg)' : 'none',
-                        transition: 'transform 0.2s ease, background-color 0.2s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.5) skewX(-5deg)';
-                        e.currentTarget.style.zIndex = 10;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = day.level > 0 ? 'skewX(-5deg)' : 'none';
-                        e.currentTarget.style.zIndex = 1;
-                      }}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+          <HeatmapGrid weeks={githubWeeks} type="github" direction="ltr" />
 
         </div>
 
@@ -250,88 +384,31 @@ export default function Heatmaps({ onNavigate }) {
           boxShadow: '15px 15px 0px var(--red)',
           padding: '2rem',
           position: 'relative',
-          maxWidth: '1200px',
-          margin: '3rem auto 0 auto',
+          maxWidth: '1000px',
+          margin: '3rem 0 0 0',
           width: '100%'
         }}>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <h2 className="font-p5" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0', color: 'var(--black)' }}>LEETCODE ACTIVITY</h2>
+              <h2 className="font-p5" style={{ fontSize: '2.5rem', margin: '0 0 0.5rem 0', color: 'var(--black)' }}>LEETCODE TARGET</h2>
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 <div style={{ backgroundColor: 'var(--black)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
-                  TOTAL: {lcStats.total}
+                  TOTAL: {leetcodeStats.total}
                 </div>
                 <div style={{ backgroundColor: 'var(--red)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
-                  STREAK: {lcStats.streak} DAYS
+                  STREAK: {leetcodeStats.streak} DAYS
                 </div>
               </div>
             </div>
-
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <input 
-                type="text" 
-                value={leetcodeUser}
-                onChange={(e) => setLeetcodeUser(e.target.value)}
-                style={{
-                  border: '3px solid var(--black)',
-                  padding: '0.5rem 1rem',
-                  fontFamily: 'Roboto',
-                  fontWeight: 'bold',
-                  fontSize: '1rem',
-                  outline: 'none',
-                  boxShadow: '4px 4px 0px var(--black)'
-                }}
-              />
-              <button 
-                onClick={loadData}
-                style={{
-                  backgroundColor: 'var(--black)',
-                  color: 'var(--white)',
-                  border: '3px solid var(--black)',
-                  padding: '0.5rem 1.5rem',
-                  fontFamily: 'Anton',
-                  fontSize: '1.2rem',
-                  cursor: 'pointer',
-                  boxShadow: '4px 4px 0px var(--red)',
-                  transition: 'all 0.1s ease'
-                }}
-              >
-                {loading ? 'LOADING...' : 'GENERATE'}
-              </button>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <span style={{ fontFamily: 'Anton', fontSize: '1.2rem', color: 'var(--black)' }}>@{username}</span>
+              <span style={{ fontFamily: 'Roboto', fontSize: '0.9rem', color: 'gray' }}>{loading ? 'FETCHING INTEL...' : 'SYNC COMPLETE'}</span>
             </div>
           </div>
 
-          <div style={{ overflowX: 'auto', paddingBottom: '1rem' }}>
-            <div style={{ display: 'flex', gap: '4px', minWidth: 'max-content' }}>
-              {lcWeeks.map((week, wIdx) => (
-                <div key={wIdx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  {week.map((day, dIdx) => (
-                    <div 
-                      key={dIdx} 
-                      title={`${day.count} submissions on ${day.date}`}
-                      style={{
-                        width: '14px',
-                        height: '14px',
-                        backgroundColor: colors[day.level],
-                        border: day.level === 0 ? '1px solid rgba(0,0,0,0.1)' : '1px solid var(--black)',
-                        transform: day.level > 0 ? 'skewX(-5deg)' : 'none',
-                        transition: 'transform 0.2s ease, background-color 0.2s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.5) skewX(-5deg)';
-                        e.currentTarget.style.zIndex = 10;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = day.level > 0 ? 'skewX(-5deg)' : 'none';
-                        e.currentTarget.style.zIndex = 1;
-                      }}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+          <HeatmapGrid weeks={leetcodeWeeks} type="leetcode" direction="rtl" />
 
         </div>
 
