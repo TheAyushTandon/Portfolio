@@ -138,7 +138,7 @@ function ProjectCard({ project, index, onOpenStack }) {
             trigger: cardRef.current,
             scroller: "#projects-container",
             start: "top 80%",
-            toggleActions: "play reverse play reverse"
+            toggleActions: "play none none none"
           }
         });
         

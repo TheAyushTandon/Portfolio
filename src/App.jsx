@@ -23,7 +23,9 @@ const Certifications = lazyWithRetry(() => import('./components/Certifications')
 const Heatmaps = lazyWithRetry(() => import('./components/Heatmaps'));
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    return sessionStorage.getItem('site_loaded') !== 'true';
+  });
   const [isAccessible, setIsAccessible] = useState(false);
   const transitionRef = useRef(null);
   const navigate = useNavigate();
@@ -35,6 +37,12 @@ function App() {
       document.body.classList.add('accessible-mode');
     }
   }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      sessionStorage.setItem('site_loaded', 'true');
+    }
+  }, [isLoading]);
 
   const toggleAccessibility = () => {
     const newState = !isAccessible;
