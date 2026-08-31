@@ -471,3 +471,47 @@ body {
   z-index: 99998;
 }
 
+/* ACCESSIBILITY MODE OVERRIDES */
+body.accessible-mode {
+  cursor: auto !important;
+}
+body.accessible-mode * {
+  cursor: auto !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+body.accessible-mode .menu-item-box,
+body.accessible-mode .hero-menu-text,
+body.accessible-mode h1,
+body.accessible-mode .contact-bio-box,
+body.accessible-mode .contact-bio-inner,
+body.accessible-mode .timeline-tag,
+body.accessible-mode .timeline-center-line,
+body.accessible-mode .hero-menu-list,
+body.accessible-mode .hero-img {
+  transform: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+body.accessible-mode .menu-item-box {
+  border-radius: 6px;
+}
+
+body.accessible-mode .font-p5,
+body.accessible-mode .glitch-text {
+  font-family: 'Roboto', sans-serif !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  font-weight: bold;
+}
+
+body.accessible-mode .glitch-text::before,
+body.accessible-mode .glitch-text::after,
+body.accessible-mode .click-spark,
+body.accessible-mode .click-slice {
+  display: none !important;
+}
+
