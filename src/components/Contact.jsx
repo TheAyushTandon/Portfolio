@@ -84,81 +84,32 @@ export default function Contact({ onNavigate }) {
           </div>
         </div>
 
-        {/* Content Split Layout */}
-        <div className="contact-split">
+        {/* Content Stack Layout */}
+        <div className="contact-stack">
           
-          {/* Bio and Form Box */}
-          <div className="contact-bio-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-             <div className="contact-bio-box">
-               <h2 className="font-p5 text-p5-white contact-bio-title">
-                 TARGET DOSSIER
-               </h2>
-               <div className="contact-bio-inner">
-                 <p style={{ fontFamily: 'Roboto', fontSize: '1.4rem', lineHeight: 1.6, margin: 0 }}>
-                   I like to design and automate things, solving real-life problems. I also love to try new food and enjoy sports. 
-                   <br/><br/>
-                   <span style={{ color: 'var(--red)', fontWeight: 'bold' }}>CURRENT STATUS:</span> 3rd year of B.Tech CSE.
-                 </p>
-               </div>
-             </div>
-
-             <div className="contact-bio-box" style={{ backgroundColor: 'var(--black)' }}>
-               <h2 className="font-p5 text-p5-white contact-bio-title" style={{ backgroundColor: 'var(--red)', color: 'var(--white)' }}>
-                 SEND CALLING CARD (EMAIL)
-               </h2>
-               <div className="contact-bio-inner" style={{ backgroundColor: 'var(--white)' }}>
-                 <form 
-                   onSubmit={(e) => {
-                     e.preventDefault();
-                     const formData = new FormData(e.target);
-                     const msg = formData.get('message');
-                     const name = formData.get('name');
-                     window.location.href = `mailto:TheAyushTandon@gmail.com?subject=Message from ${name}&body=${encodeURIComponent(msg)}`;
-                   }}
-                   style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-                 >
-                   <input 
-                     name="name"
-                     type="text" 
-                     placeholder="YOUR NAME" 
-                     required
-                     style={{
-                       border: '3px solid var(--black)', padding: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', fontSize: '1.2rem', boxShadow: '4px 4px 0px var(--black)', outline: 'none'
-                     }}
-                   />
-                   <textarea 
-                     name="message"
-                     placeholder="YOUR MESSAGE" 
-                     required
-                     rows={4}
-                     style={{
-                       border: '3px solid var(--black)', padding: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', fontSize: '1.2rem', boxShadow: '4px 4px 0px var(--black)', outline: 'none', resize: 'vertical'
-                     }}
-                   />
-                   <button 
-                     type="submit"
-                     style={{
-                       backgroundColor: 'var(--red)', color: 'var(--white)', border: '4px solid var(--black)', padding: '0.8rem', fontFamily: 'Anton', fontSize: '1.5rem', cursor: 'pointer', boxShadow: '6px 6px 0px var(--black)', transition: 'all 0.1s ease', marginTop: '0.5rem'
-                     }}
-                     onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '8px 8px 0px var(--black)'; }}
-                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '6px 6px 0px var(--black)'; }}
-                   >
-                     SEND MESSAGE
-                   </button>
-                 </form>
-               </div>
-             </div>
+          {/* 1. Target Dossier */}
+          <div className="contact-bio-box" style={{ width: '100%' }}>
+            <h2 className="font-p5 text-p5-white contact-bio-title">
+              TARGET DOSSIER
+            </h2>
+            <div className="contact-bio-inner">
+              <p style={{ fontFamily: 'Roboto', fontSize: '1.4rem', lineHeight: 1.6, margin: 0 }}>
+                I like to design and automate things, solving real-life problems. I also love to try new food and enjoy sports. 
+                <br/><br/>
+                <span style={{ color: 'var(--red)', fontWeight: 'bold' }}>CURRENT STATUS:</span> 3rd year of B.Tech CSE.
+              </p>
+            </div>
           </div>
 
-          {/* Links / Network */}
-          <div className="contact-links-wrapper">
+          {/* 2. Links / Network */}
+          <div className="contact-links-wrapper" style={{ width: '100%', maxWidth: '800px', margin: '2rem 0' }}>
             {links.map((link, i) => (
               <div 
                 key={link.label}
                 ref={el => linksRef.current[i] = el}
                 className="menu-item-box contact-link-box"
                 style={{
-                  '--stagger-offset': `${i * 30}px`,
+                  '--stagger-offset': `${(i - 2.5) * 15}px`, // Staggering around center
                   display: 'flex',
                   alignItems: 'center',
                   padding: '1rem 2rem',
@@ -188,6 +139,54 @@ export default function Contact({ onNavigate }) {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* 3. Send Calling Card Form */}
+          <div className="contact-bio-box" style={{ backgroundColor: 'var(--black)', width: '100%' }}>
+            <h2 className="font-p5 text-p5-white contact-bio-title" style={{ backgroundColor: 'var(--red)', color: 'var(--white)' }}>
+              SEND CALLING CARD (EMAIL)
+            </h2>
+            <div className="contact-bio-inner" style={{ backgroundColor: 'var(--white)' }}>
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  const msg = formData.get('message');
+                  const name = formData.get('name');
+                  window.location.href = `mailto:TheAyushTandon@gmail.com?subject=Message from ${name}&body=${encodeURIComponent(msg)}`;
+                }}
+                style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+              >
+                <input 
+                  name="name"
+                  type="text" 
+                  placeholder="YOUR NAME" 
+                  required
+                  style={{
+                    border: '3px solid var(--black)', padding: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', fontSize: '1.2rem', boxShadow: '4px 4px 0px var(--black)', outline: 'none'
+                  }}
+                />
+                <textarea 
+                  name="message"
+                  placeholder="YOUR MESSAGE" 
+                  required
+                  rows={4}
+                  style={{
+                    border: '3px solid var(--black)', padding: '0.8rem', fontFamily: 'Roboto', fontWeight: 'bold', fontSize: '1.2rem', boxShadow: '4px 4px 0px var(--black)', outline: 'none', resize: 'vertical'
+                  }}
+                />
+                <button 
+                  type="submit"
+                  style={{
+                    backgroundColor: 'var(--red)', color: 'var(--white)', border: '4px solid var(--black)', padding: '0.8rem', fontFamily: 'Anton', fontSize: '1.5rem', cursor: 'pointer', boxShadow: '6px 6px 0px var(--black)', transition: 'all 0.1s ease', marginTop: '0.5rem'
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '8px 8px 0px var(--black)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '6px 6px 0px var(--black)'; }}
+                >
+                  SEND MESSAGE
+                </button>
+              </form>
+            </div>
           </div>
 
         </div>
