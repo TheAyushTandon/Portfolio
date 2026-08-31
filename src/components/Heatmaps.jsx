@@ -47,7 +47,7 @@ const generateEmptyCalendarForYear = (year) => {
 
 // Reusable Heatmap Grid with original wave animation logic
 const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
-  const colors = ["#1a1a1a", "#7a0000", "#b30000", "#e60000", "#ff3333"];
+  const colors = ["#111111", "#800000", "#cc0000", "#ff0000", "#ff4d4d"];
   const activeColor = "var(--red)";
   const ENTER_STEP_S = 0.014;
 
@@ -143,6 +143,26 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
             })}
           </div>
         </div>
+      </div>
+
+      {/* Legend */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
+        <span style={{ fontFamily: 'Roboto', fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--black)' }}>LESS</span>
+        <div style={{ display: 'flex', gap: '4px' }}>
+          {colors.map((color, idx) => (
+            <div 
+              key={idx}
+              style={{
+                width: '14px',
+                height: '14px',
+                backgroundColor: color,
+                border: idx === 0 ? '1px solid rgba(0,0,0,0.1)' : '1px solid var(--black)',
+                transform: idx > 0 ? 'skewX(-5deg)' : 'none'
+              }}
+            />
+          ))}
+        </div>
+        <span style={{ fontFamily: 'Roboto', fontSize: '0.8rem', fontWeight: 'bold', color: 'var(--black)' }}>MORE</span>
       </div>
 
       <style>{`
