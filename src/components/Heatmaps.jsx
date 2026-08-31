@@ -46,17 +46,10 @@ const generateEmptyCalendarForYear = (year) => {
 };
 
 // Reusable Heatmap Grid with original wave animation logic
-const HeatmapGrid = ({ weeks, type, direction = "ltr" }) => {
-  const [tooltip, setTooltip] = useState({ content: "", x: 0, y: 0, visible: false, color: "" });
-  
-  const colors = ["var(--black)", "#4a0000", "#8a0000", "#cc0000", "var(--red)"];
+const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
+  const colors = ["#1a1a1a", "#7a0000", "#b30000", "#e60000", "#ff3333"];
   const activeColor = "var(--red)";
   const ENTER_STEP_S = 0.014;
-
-  const handleHoverCell = (e, text, color) => {
-    setTooltip({ content: text, x: e.clientX, y: e.clientY, visible: true, color });
-  };
-  const handleLeaveCell = () => setTooltip(prev => ({ ...prev, visible: false }));
 
   // Get months header
   const getMonthsHeader = () => {
@@ -139,12 +132,13 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr" }) => {
                         onMouseEnter={(e) => {
                           e.currentTarget.style.transform = 'scale(1.5) skewX(-5deg)';
                           e.currentTarget.style.zIndex = 10;
-                          handleHoverCell(e, hoverText, activeColor);
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          onHover(hoverText, activeColor, rect.left + rect.width / 2, rect.top);
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.transform = day.level > 0 ? 'skewX(-5deg)' : 'none';
                           e.currentTarget.style.zIndex = 1;
-                          handleLeaveCell();
+                          onLeave();
                         }}
                       />
                     );
@@ -155,29 +149,6 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr" }) => {
           </div>
         </div>
       </div>
-
-      {/* Floating Tooltip */}
-      {tooltip.visible && (
-        <div style={{
-          position: 'fixed',
-          top: tooltip.y - 40,
-          left: tooltip.x,
-          transform: 'translateX(-50%)',
-          backgroundColor: 'var(--black)',
-          color: 'var(--white)',
-          padding: '0.4rem 0.8rem',
-          fontFamily: 'Roboto',
-          fontSize: '0.9rem',
-          fontWeight: 'bold',
-          border: `2px solid ${tooltip.color}`,
-          boxShadow: '4px 4px 0px rgba(0,0,0,0.5)',
-          pointerEvents: 'none',
-          zIndex: 100,
-          whiteSpace: 'nowrap'
-        }}>
-          {tooltip.content}
-        </div>
-      )}
 
       <style>{`
         @keyframes waveEnter {
@@ -194,6 +165,7 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr" }) => {
 
 export default function Heatmaps({ onNavigate }) {
   const containerRef = useRef(null);
+  const [tooltip, setTooltip] = useState({ content: "", x: 0, y: 0, visible: false, color: "" });
   
   // Hardcoded to TheAyushTandon as requested
   const username = "TheAyushTandon";
@@ -201,10 +173,10 @@ export default function Heatmaps({ onNavigate }) {
   const [loading, setLoading] = useState(true);
   
   const [githubWeeks, setGithubWeeks] = useState(generateEmptyCalendarForYear(null));
-  const [githubStats, setGithubStats] = useState({ total: 0, activeDays: 0, streak: 0 });
+  const [githubStats, setGithubStats] = useState({ total: 0, activeDays: 0, streak: 0, maxDaily: 0 });
   
   const [leetcodeWeeks, setLeetcodeWeeks] = useState(generateEmptyCalendarForYear(null));
-  const [leetcodeStats, setLeetcodeStats] = useState({ total: 0, activeDays: 0, streak: 0 });
+  const [leetcodeStats, setLeetcodeStats] = useState({ total: 0, activeDays: 0, streak: 0, maxDaily: 0 });
 
   const apiHost = import.meta.env.VITE_API_URL || "https://stepcode-heatmaps.onrender.com";
 
@@ -223,13 +195,17 @@ export default function Heatmaps({ onNavigate }) {
     const weeks = data.weeks.map(week => week.contributionDays.map(day => ({
       date: day.date, count: day.count, level: levelMap[day.level] ?? 0
     })));
-    let activeDays = 0, currentStreak = 0, maxStreak = 0;
+    let activeDays = 0, currentStreak = 0, maxStreak = 0, maxDaily = 0;
     weeks.forEach(w => w.forEach(d => {
-      if (d.count > 0) { activeDays++; currentStreak++; if (currentStreak > maxStreak) maxStreak = currentStreak; }
+      if (d.count > 0) { 
+        activeDays++; currentStreak++; 
+        if (currentStreak > maxStreak) maxStreak = currentStreak; 
+        if (d.count > maxDaily) maxDaily = d.count;
+      }
       else currentStreak = 0;
     }));
     setGithubWeeks(weeks);
-    setGithubStats({ total: data.totalContributions, activeDays, streak: maxStreak });
+    setGithubStats({ total: data.totalContributions, activeDays, streak: maxStreak, maxDaily });
   };
 
   const processLeetcodeData = (data) => {
@@ -255,7 +231,7 @@ export default function Heatmaps({ onNavigate }) {
 
     const weeks = [];
     let currentWeek = [];
-    let currentStreak = 0, maxStreak = 0;
+    let currentStreak = 0, maxStreak = 0, maxDaily = 0;
     const loopDate = new Date(calendarStart);
     for (let i = 0; i < totalDays; i++) {
       const dStr = loopDate.toISOString().split("T")[0];
@@ -263,12 +239,16 @@ export default function Heatmaps({ onNavigate }) {
       let lvl = 0;
       if (count > 0) { if (count <= 2) lvl = 1; else if (count <= 4) lvl = 2; else if (count <= 7) lvl = 3; else lvl = 4; }
       currentWeek.push({ date: dStr, count, level: lvl });
-      if (count > 0) { currentStreak++; if (currentStreak > maxStreak) maxStreak = currentStreak; } else currentStreak = 0;
+      if (count > 0) { 
+        currentStreak++; 
+        if (currentStreak > maxStreak) maxStreak = currentStreak; 
+        if (count > maxDaily) maxDaily = count;
+      } else currentStreak = 0;
       if (currentWeek.length === 7) { weeks.push([...currentWeek]); currentWeek = []; }
       loopDate.setDate(loopDate.getDate() + 1);
     }
     setLeetcodeWeeks(weeks);
-    setLeetcodeStats({ total: totalSubmissions, activeDays, streak: maxStreak });
+    setLeetcodeStats({ total: totalSubmissions, activeDays, streak: maxStreak, maxDaily });
   };
 
   const loadData = async () => {
@@ -306,6 +286,29 @@ export default function Heatmaps({ onNavigate }) {
   return (
     <div ref={containerRef} className="absolute-fill bg-p5-black" style={{ overflowY: 'auto', overflowX: 'hidden' }}>
       
+      {/* Global Floating Tooltip for fixed positioning outside transformed parents */}
+      {tooltip.visible && (
+        <div style={{
+          position: 'fixed',
+          top: tooltip.y - 45,
+          left: tooltip.x,
+          transform: 'translateX(-50%)',
+          backgroundColor: 'var(--black)',
+          color: 'var(--white)',
+          padding: '0.4rem 0.8rem',
+          fontFamily: 'Roboto',
+          fontSize: '0.9rem',
+          fontWeight: 'bold',
+          border: `2px solid ${tooltip.color}`,
+          boxShadow: '4px 4px 0px rgba(0,0,0,0.5)',
+          pointerEvents: 'none',
+          zIndex: 9999,
+          whiteSpace: 'nowrap'
+        }}>
+          {tooltip.content}
+        </div>
+      )}
+
       <div 
         style={{
           position: 'fixed',
@@ -350,7 +353,8 @@ export default function Heatmaps({ onNavigate }) {
           boxShadow: '15px 15px 0px var(--red)',
           padding: '2rem',
           position: 'relative',
-          maxWidth: '1000px',
+          maxWidth: '1100px',
+          margin: '0 auto',
           width: '100%'
         }}>
           
@@ -364,6 +368,12 @@ export default function Heatmaps({ onNavigate }) {
                 <div style={{ backgroundColor: 'var(--red)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
                   STREAK: {githubStats.streak} DAYS
                 </div>
+                <div style={{ backgroundColor: 'var(--black)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
+                  ACTIVE DAYS: {githubStats.activeDays}
+                </div>
+                <div style={{ backgroundColor: 'var(--red)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
+                  MAX DAILY: {githubStats.maxDaily}
+                </div>
               </div>
             </div>
             
@@ -373,7 +383,13 @@ export default function Heatmaps({ onNavigate }) {
             </div>
           </div>
 
-          <HeatmapGrid weeks={githubWeeks} type="github" direction="ltr" />
+          <HeatmapGrid 
+            weeks={githubWeeks} 
+            type="github" 
+            direction="ltr" 
+            onHover={(content, color, x, y) => setTooltip({ content, color, x, y, visible: true })}
+            onLeave={() => setTooltip(prev => ({ ...prev, visible: false }))}
+          />
 
         </div>
 
@@ -384,8 +400,8 @@ export default function Heatmaps({ onNavigate }) {
           boxShadow: '15px 15px 0px var(--red)',
           padding: '2rem',
           position: 'relative',
-          maxWidth: '1000px',
-          margin: '3rem 0 0 0',
+          maxWidth: '1100px',
+          margin: '3rem auto 0 auto',
           width: '100%'
         }}>
           
@@ -399,6 +415,12 @@ export default function Heatmaps({ onNavigate }) {
                 <div style={{ backgroundColor: 'var(--red)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
                   STREAK: {leetcodeStats.streak} DAYS
                 </div>
+                <div style={{ backgroundColor: 'var(--black)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
+                  ACTIVE DAYS: {leetcodeStats.activeDays}
+                </div>
+                <div style={{ backgroundColor: 'var(--red)', color: 'var(--white)', padding: '0.5rem 1rem', fontFamily: 'Roboto', fontWeight: 'bold', transform: 'skewX(-10deg)' }}>
+                  MAX DAILY: {leetcodeStats.maxDaily}
+                </div>
               </div>
             </div>
             
@@ -408,7 +430,13 @@ export default function Heatmaps({ onNavigate }) {
             </div>
           </div>
 
-          <HeatmapGrid weeks={leetcodeWeeks} type="leetcode" direction="rtl" />
+          <HeatmapGrid 
+            weeks={leetcodeWeeks} 
+            type="leetcode" 
+            direction="rtl" 
+            onHover={(content, color, x, y) => setTooltip({ content, color, x, y, visible: true })}
+            onLeave={() => setTooltip(prev => ({ ...prev, visible: false }))}
+          />
 
         </div>
 
