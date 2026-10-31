@@ -22,6 +22,7 @@ const Experience = lazyWithRetry(() => import('./components/Experience'));
 const Certifications = lazyWithRetry(() => import('./components/Certifications'));
 const Heatmaps = lazyWithRetry(() => import('./components/Heatmaps'));
 const Resume = lazyWithRetry(() => import('./components/Resume'));
+const AiChatbot = lazyWithRetry(() => import('./components/AiChatbot'));
 
 function App() {
   const [isLoading, setIsLoading] = useState(() => {
@@ -99,14 +100,20 @@ function App() {
       
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
       
+      {/* Persona 5 Cognitive AI Chatbot */}
+      <Suspense fallback={null}>
+        <AiChatbot onNavigate={handleNavigate} />
+      </Suspense>
+
       {/* Floating Accessibility Toggle */}
       <button 
         onClick={toggleAccessibility}
+        className="accessibility-toggle"
         style={{
           position: 'fixed',
           bottom: '20px',
-          right: '20px',
-          zIndex: 100000,
+          left: '20px',
+          zIndex: 99998,
           backgroundColor: 'var(--white)',
           border: '2px solid var(--black)',
           boxShadow: '4px 4px 0px var(--black)',
@@ -118,6 +125,7 @@ function App() {
           textTransform: 'uppercase',
           fontSize: '0.8rem',
           transform: isAccessible ? 'none' : 'skewX(-10deg)',
+          transition: 'opacity 0.2s ease',
         }}
       >
         {isAccessible ? '👁️ STANDARD MODE' : '👁️ ACCESSIBLE MODE'}
