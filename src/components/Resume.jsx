@@ -22,9 +22,6 @@ export default function Resume({ onNavigate }) {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1.5rem' }}>
           <div>
-            <span className="font-p5 text-p5-red" style={{ fontSize: '1.2rem', letterSpacing: '2px', display: 'block', transform: 'skewX(-10deg)' }}>
-              [ DOSSIER // OFFICIAL CLEARANCE ]
-            </span>
             <h1 className="font-p5 text-p5-white" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', transform: 'skewX(-10deg)', textShadow: '4px 4px 0px var(--red)', margin: 0, lineHeight: 1 }}>
               AYUSH TANDON RESUME
             </h1>
@@ -44,7 +41,7 @@ export default function Resume({ onNavigate }) {
             }}
           >
             <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.2rem, 2.5vw, 2rem)' }}>
-              <span className="hero-menu-icon" style={{ fontSize: 'clamp(0.9rem, 2vw, 1.3rem)' }}>▶</span> BACK TO HOME
+              <span className="hero-menu-icon" style={{ fontSize: 'clamp(0.9rem, 2vw, 1.3rem)' }}>▶</span> BACK
             </h2>
           </div>
         </div>

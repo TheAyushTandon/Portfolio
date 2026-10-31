@@ -387,7 +387,7 @@ export default function Heatmaps({ onNavigate }) {
             }}
           >
             <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
-              <span className="hero-menu-icon">▶</span> BACK TO HQ
+              <span className="hero-menu-icon">▶</span> BACK
             </h2>
           </div>
         </div>

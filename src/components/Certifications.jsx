@@ -259,7 +259,7 @@ export default function Certifications({ onNavigate }) {
             }}
           >
             <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', color: 'inherit' }}>
-              <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', color: 'inherit' }}>▶</span> BACK TO HQ
+              <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', color: 'inherit' }}>▶</span> BACK
             </h2>
           </div>
         </div>
@@ -299,7 +299,7 @@ export default function Certifications({ onNavigate }) {
               zIndex: 10
             }}
           >
-            ★ TECH ARSENAL // CORE STACK ★
+            ★ TECH CORE STACK ★
           </div>
 
           <div style={{ transform: 'skewX(2.5deg)' }}>
@@ -314,7 +314,7 @@ export default function Certifications({ onNavigate }) {
               fadeOut={true}
               fadeOutWidth={0.12}
               labels="hover"
-              ariaLabel="Core Tech Arsenal"
+              ariaLabel="Core Tech Stack"
             />
           </div>
         </div>

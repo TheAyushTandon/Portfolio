@@ -378,7 +378,7 @@ export default function Experience({ onNavigate }) {
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3rem', flexWrap: 'wrap', gap: '2rem' }}>
           <h1 className="font-p5 text-p5-red" style={{ fontSize: 'clamp(3rem, 7vw, 7rem)', transform: 'skewX(-8deg)', textShadow: '6px 6px 0px var(--black)', margin: 0, lineHeight: 1 }}>
-            DOSSIER: EXPERIENCE
+            EXPERIENCE
           </h1>
           
           <div 
@@ -395,7 +395,7 @@ export default function Experience({ onNavigate }) {
             }}
           >
             <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
-              <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>▶</span> BACK TO HQ
+              <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>▶</span> BACK
             </h2>
           </div>
         </div>

@@ -51,7 +51,6 @@ export default function ResumeModal({ isOpen, onClose }) {
         {/* Modal Top Bar */}
         <div className="resume-modal-header">
           <div className="resume-modal-title-group">
-            <span className="resume-modal-badge font-p5">CONFIDENTIAL // DOSSIER</span>
             <h2 className="resume-modal-title font-p5">
               <FileText size={22} style={{ display: 'inline', verticalAlign: '-3px', marginRight: '8px' }} />
               AYUSH TANDON — FULL-STACK AI RESUME
