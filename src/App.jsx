@@ -4,7 +4,6 @@ import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import TransitionOverlay from './components/TransitionOverlay';
 import ClickSpark from './components/ClickSpark';
-import { startBackgroundPrefetch } from './utils/heatmapData';
 
 const lazyWithRetry = (componentImport) =>
   lazy(async () => {
@@ -28,18 +27,28 @@ function App() {
   const [isLoading, setIsLoading] = useState(() => {
     return sessionStorage.getItem('site_loaded') !== 'true';
   });
-  const [isAccessible, setIsAccessible] = useState(false);
+  const [isAccessible, setIsAccessible] = useState(() => {
+    return localStorage.getItem('accessible-mode') === 'true';
+  });
   const transitionRef = useRef(null);
   const navigate = useNavigate();
 
-  // On mount, check if previously set to accessible mode and start prefetching heatmap data
+  // On mount, apply accessibility class if active and start idle prefetching heatmap data
   useEffect(() => {
-    startBackgroundPrefetch();
-    if (localStorage.getItem('accessible-mode') === 'true') {
-      setIsAccessible(true);
+    if (isAccessible) {
       document.body.classList.add('accessible-mode');
     }
-  }, []);
+
+    const prefetchTimer = setTimeout(() => {
+      import('./utils/heatmapData')
+        .then(({ startBackgroundPrefetch }) => {
+          startBackgroundPrefetch();
+        })
+        .catch(() => {});
+    }, 2000);
+
+    return () => clearTimeout(prefetchTimer);
+  }, [isAccessible]);
 
   useEffect(() => {
     if (!isLoading) {

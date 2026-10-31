@@ -73,9 +73,11 @@ export default function ClickSpark() {
 
     // Use capture phase (true) so it fires even if components use e.stopPropagation()
     window.addEventListener('click', handleClick, true);
+    window.addEventListener('touchstart', handleTouch, { passive: true, capture: true });
     
     return () => {
       window.removeEventListener('click', handleClick, true);
+      window.removeEventListener('touchstart', handleTouch, true);
     };
   }, []);
 

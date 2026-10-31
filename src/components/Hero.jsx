@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import gsap from 'gsap';
-import ResumeModal from './ResumeModal';
 import PixelSwap from './PixelSwap';
+
+const ResumeModal = lazy(() => import('./ResumeModal'));
 
 export default function Hero({ onNavigate }) {
   const containerRef = useRef(null);
@@ -119,7 +120,11 @@ export default function Hero({ onNavigate }) {
       </div>
 
       {/* Full-Screen Persona 5 Resume Modal */}
-      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+      {isResumeOpen && (
+        <Suspense fallback={null}>
+          <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
+        </Suspense>
+      )}
     </div>
   );
 }

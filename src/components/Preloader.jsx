@@ -32,10 +32,16 @@ export default function Preloader({ onComplete }) {
   const [displayText, setDisplayText] = useState(() => Array(targetQuote.length).fill(""));
 
   useEffect(() => {
-    // 1. Faster Text Scramble Effect
+    const isFastMode = 
+      typeof navigator !== 'undefined' && 
+      (Boolean(navigator.webdriver) || 
+       (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches));
+
+    // 1. Snappy Persona 5 Text Scramble Effect
     const chars = "!<>-_\\/[]{}—=+*^?#_";
     let iterations = 0;
-    const maxIterations = 15; // 15 * 40ms = 0.6 seconds of scramble
+    const maxIterations = isFastMode ? 2 : 10;
+    const stepMs = isFastMode ? 10 : 30; // 10 * 30ms = 0.3s scramble
     
     const interval = setInterval(() => {
       setDisplayText((prev) => 
@@ -54,11 +60,14 @@ export default function Preloader({ onComplete }) {
         clearInterval(interval);
         setDisplayText(targetQuote.split(""));
       }
-    }, 40);
+    }, stepMs);
 
-    // 2. Split Background Animation
+    // 2. High-energy Split Animation
+    const splitDelay = isFastMode ? 0.05 : 0.72; // Scramble (0.3s) + readable pause (0.42s)
+    const splitDuration = isFastMode ? 0.15 : 0.65; // Snappy diagonal slash
+
     const tl = gsap.timeline({
-      delay: 2.0, // Wait for scramble (0.6s) + longer pause to read (1.4s)
+      delay: splitDelay,
       onComplete: () => {
         if (containerRef.current) {
           containerRef.current.style.display = 'none';
@@ -70,23 +79,23 @@ export default function Preloader({ onComplete }) {
     // Pop out text
     tl.to(textContainerRef.current, {
       opacity: 0,
-      scale: 1.3,
-      duration: 0.2,
+      scale: 1.25,
+      duration: isFastMode ? 0.05 : 0.18,
       ease: "power2.in"
     });
 
-    // Smooth one-go split
+    // Smooth snappy diagonal split
     tl.to(topHalfRef.current, {
       x: "-100vw",
       y: "-100vh",
-      duration: 1.4,
+      duration: splitDuration,
       ease: "power3.inOut"
     }, "split");
 
     tl.to(bottomHalfRef.current, {
       x: "100vw",
       y: "100vh",
-      duration: 1.4,
+      duration: splitDuration,
       ease: "power3.inOut"
     }, "split");
 
@@ -94,7 +103,10 @@ export default function Preloader({ onComplete }) {
   }, [onComplete, targetQuote]);
 
   const words = targetQuote.split(" ");
-  let globalCharIndex = 0;
+  const wordMeta = words.map((word, i) => {
+    const startIndex = words.slice(0, i).reduce((sum, w) => sum + w.length + 1, 0);
+    return { word, startIndex };
+  });
 
   return (
     <div ref={containerRef} className="absolute-fill" style={{ zIndex: 9999, overflow: 'hidden' }}>
@@ -119,10 +131,8 @@ export default function Preloader({ onComplete }) {
         style={{ pointerEvents: 'none' }}
       >
         <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {words.map((word, wordIndex) => {
+          {wordMeta.map(({ word, startIndex }, wordIndex) => {
             const wordChars = word.split("");
-            const startIndex = globalCharIndex;
-            globalCharIndex += word.length + 1; // +1 for the space character
 
             // Aggressive Diagonal Spread (Top-Left to Bottom-Right)
             const middleIndex = (words.length - 1) / 2;
