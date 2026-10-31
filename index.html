@@ -39,15 +39,13 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" media="print" onload="this.media='all'">
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap">
     </noscript>
 
-    <!-- Critical Hero Image Preloads for Instant LCP -->
-    <link rel="preload" as="image" href="/hero.webp" type="image/webp" fetchpriority="high">
-    <link rel="preload" as="image" href="/bg.webp" type="image/webp" fetchpriority="high">
+    <!-- Critical Hero Image Preload for Desktop Only (prevents starving mobile network bandwidth) -->
+    <link rel="preload" as="image" href="/hero.webp" type="image/webp" media="(min-width: 769px)" fetchpriority="high">
 
   </head>
   <body>

@@ -37,11 +37,15 @@ export default function Preloader({ onComplete }) {
       (Boolean(navigator.webdriver) || 
        (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches));
 
+    const isMobile = 
+      typeof window !== 'undefined' && 
+      (window.innerWidth < 768 || /Mobi|Android/i.test(navigator.userAgent));
+
     // 1. Snappy Persona 5 Text Scramble Effect
     const chars = "!<>-_\\/[]{}—=+*^?#_";
     let iterations = 0;
-    const maxIterations = isFastMode ? 2 : 10;
-    const stepMs = isFastMode ? 10 : 30; // 10 * 30ms = 0.3s scramble
+    const maxIterations = isFastMode ? 2 : (isMobile ? 5 : 10);
+    const stepMs = isFastMode ? 10 : (isMobile ? 25 : 30); // Mobile: 5 * 25ms = 125ms scramble
     
     const interval = setInterval(() => {
       setDisplayText((prev) => 
@@ -63,8 +67,8 @@ export default function Preloader({ onComplete }) {
     }, stepMs);
 
     // 2. High-energy Split Animation
-    const splitDelay = isFastMode ? 0.05 : 0.72; // Scramble (0.3s) + readable pause (0.42s)
-    const splitDuration = isFastMode ? 0.15 : 0.65; // Snappy diagonal slash
+    const splitDelay = isFastMode ? 0.05 : (isMobile ? 0.35 : 0.72); // Mobile: 125ms scramble + 225ms pause
+    const splitDuration = isFastMode ? 0.15 : (isMobile ? 0.40 : 0.65); // Mobile: 400ms snappy slash
 
     const tl = gsap.timeline({
       delay: splitDelay,
@@ -80,7 +84,7 @@ export default function Preloader({ onComplete }) {
     tl.to(textContainerRef.current, {
       opacity: 0,
       scale: 1.25,
-      duration: isFastMode ? 0.05 : 0.18,
+      duration: isFastMode ? 0.05 : (isMobile ? 0.12 : 0.18),
       ease: "power2.in"
     });
 

@@ -119,6 +119,14 @@ body {
 }
 
 /* Hero Page Responsive Styles */
+.hero-bg {
+  background-image: url('/bg.webp');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
 .hero-img {
   position: absolute;
   bottom: -2%;
@@ -216,6 +224,10 @@ body {
 
 /* Mobile Adjustments */
 @media (max-width: 768px) {
+  .hero-bg {
+    background-image: url('/bg-mobile.webp');
+  }
+
   .hero-img {
     height: 60vh;
     max-width: none;

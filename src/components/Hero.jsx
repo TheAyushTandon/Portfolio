@@ -42,29 +42,24 @@ export default function Hero({ onNavigate }) {
   return (
     <div ref={containerRef} className="absolute-fill" style={{ overflow: 'hidden' }}>
       {/* Static Background */}
-      <div 
-        className="absolute-fill"
-        style={{
-          backgroundImage: "url('/bg.webp')",
-          backgroundSize: '100% 100%', 
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          zIndex: 1
-        }}
-      />
+      <div className="absolute-fill hero-bg" />
 
       {/* Hero Character Image */}
       <div 
         className="absolute-fill"
         style={{ zIndex: 2, pointerEvents: 'none' }}
       >
-        <img 
-          ref={heroImgRef}
-          src="/hero.webp" 
-          alt="Ayush Tandon - Full-Stack Software Developer and AI Builder"
-          className="hero-img"
-          fetchPriority="high"
-        />
+        <picture>
+          <source media="(max-width: 768px)" srcSet="/hero-mobile.webp" type="image/webp" />
+          <img 
+            ref={heroImgRef}
+            src="/hero.webp" 
+            alt="Ayush Tandon - Full-Stack Software Developer and AI Builder"
+            className="hero-img"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
       </div>
 
       {/* Menu Options */}
