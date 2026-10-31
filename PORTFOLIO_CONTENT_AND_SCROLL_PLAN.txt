@@ -1,0 +1,754 @@
+================================================================================
+           AYUSH TANDON - SEAMLESS SCROLLYTELLING ONE-PAGE PORTFOLIO
+            MASTER ARCHITECTURAL BLUEPRINT & COMPLETE CONTENT DECK
+================================================================================
+
+Target Concept: Continuous single-page scrollytelling experience.
+Zero jumpy buttons. No abrupt page reloads.
+Fluid transitions governed by scroll progress: sticky pins, mask reveals (circular, 
+curtain, clip-path wipes), variable typography scrubbers, and reactive canvas layers.
+Built to leverage React Bits components seamlessly.
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS:
+1. Executive Experience Philosophy & Interaction Architecture
+2. Global System Foundations (Color, Typography, Motion Specs, React Bits Map)
+3. PHASE 01: Hero / The Neural Boot Sequence & Identity
+4. TRANSITION 01 -> 02: The Aperture Mask Expansion (Circle Reveal)
+5. PHASE 02: The Technical Manifesto / Philosophy (Sticky Scrub Text Fill)
+6. TRANSITION 02 -> 03: The Wireframe Convergence (Morph to Card Stack)
+7. PHASE 03: Flagship Engineered Systems (Pinned 3D Deck / Horizontal Showcase)
+8. TRANSITION 03 -> 04: Blueprint Deconstruction (Grid Unfold)
+9. PHASE 04: The Full-Stack AI Topology (Interactive System Architecture Matrix)
+10. TRANSITION 04 -> 05: Data Stream Ignition (Energy Cable Path)
+11. PHASE 05: The Impact Trajectory (Work History & Engineering Roles)
+12. TRANSITION 05 -> 06: Milestone Acceleration (Warp / Horizon Pan)
+13. PHASE 06: Validated Credentials, Accolades & Competitive Matrix
+14. TRANSITION 06 -> 07: Signal Calibration (Frequency Pulse)
+15. PHASE 07: The Transmission Console (Interactive Terminal & Direct Outreach)
+16. Content Copy Bank (Raw copy blocks for quick copy-pasting)
+================================================================================
+
+
+================================================================================
+1. EXECUTIVE EXPERIENCE PHILOSOPHY & INTERACTION ARCHITECTURE
+================================================================================
+
+Why Scrollytelling for Ayush Tandon?
+You are not just a frontend developer or a standard junior coder; you are a 
+Full-Stack AI Engineer who architects zero-trust LLM security gateways, autonomous 
+PR review intelligence agents, enterprise incubator CRMs, and high-concurrency backends.
+A standard portfolio with navbar clicks treats projects like isolated static cards. 
+A scrollytelling portfolio treats your career as a single unified system:
+- Scrolling down does NOT just shift pixels; it powers up systems.
+- Every scroll input controls time, depth, and visibility.
+- Mask reveals and sticky pins create the illusion of a living, breathing software 
+  application that unfolds organically.
+
+Key Animation Mechanics Employed:
+1. Sticky Pinning: The viewport locks in place while internal layers translate, rotate, 
+   or cross-fade over a defined scroll distance (e.g., 200vh-300vh).
+2. Mask Reveals: Utilizing CSS `clip-path: circle(r at x y)` or `polygon()` driven by 
+   scroll percentage to transition from dark/terminal themes into architectural canvases.
+3. Scrubbed Kinetic Typography: Paragraphs start dim/grayed out and light up word-by-word 
+   or letter-by-letter as the user scrolls through the section.
+4. Depth & Parallax: Background particles, grid distortion, and foreground UI cards 
+   move at contrasting velocities, creating a tactile three-dimensional workspace.
+
+
+================================================================================
+2. GLOBAL SYSTEM FOUNDATIONS & REACT BITS MAPPING
+================================================================================
+
+A. PALETTE SYSTEM:
+- Deep Void (Base Background): #08090C / #0B0D13
+- Neural Cyan (Primary Accent / AI): #00F0FF / #22D3EE
+- Hyper Purple (Agentic Workflows / LLMs): #8B5CF6 / #A855F7
+- High-Efficiency Emerald (Backend / Production Stability): #10B981 / #34D399
+- Pure Obsidian (Cards / Surfaces): #11141C / rgba(17, 20, 28, 0.75)
+- Starlight Text (Headings): #FFFFFF / #F1F5F9
+- Muted Slate (Descriptions): #94A3B8 / #64748B
+- Border Grid Lines: rgba(255, 255, 255, 0.08)
+
+B. TYPOGRAPHY HIERARCHY:
+- Display / Hero: Bold geometric grotesk or tech-futurist font (e.g., Space Grotesk, 
+  Syne, or Geist Mono)
+- Body: Neutral high-legibility sans-serif (Inter or Geist)
+- Code / Metrics / Terminal: Monospace (JetBrains Mono or Fira Code)
+
+C. REACT BITS COMPONENT DIRECTORY FOR THIS BUILD:
+- Text Choreography:
+  * `DecryptedText` -> For cybernetic headings, system status, and live decrypt effects.
+  * `SplitText` / `BlurText` -> For cinematic hero entrance and sub-headings.
+  * `VariableProximity` / `TrueFocus` -> For interactive mouse hover and magnetic reading.
+  * `ShinyText` -> For award highlights, hackathon wins, and certification badges.
+  * `ScrollVelocity` -> For ticker strips between milestones.
+- Backgrounds & Canvas:
+  * `Hyperspeed` / `Particles` -> Hero and contact atmospheric background.
+  * `Squares` / `GridDistortion` -> For the system architecture topology section.
+  * `Aurora` / `Waves` -> For smooth, ethereal background shifts behind projects.
+- UI & Interaction Containers:
+  * `SpotlightCard` -> For project feature inspection and credential tiles.
+  * `TiltedCard` -> For 3D floating project previews.
+  * `Magnet` -> For interactive social badges, contact triggers, and resume pill.
+  * `FlowingMenu` / `Dock` -> For subtle persistent bottom-center navigation dock.
+  * `SplashCursor` / `BlobCursor` -> Ambient cursor energy following the user.
+
+
+================================================================================
+3. PHASE 01: HERO / THE NEURAL BOOT SEQUENCE & IDENTITY
+================================================================================
+
+[Visual Architecture & Layout]
+- Full-screen 100vh canvas.
+- Background: React Bits `Hyperspeed` or subtle `Particles` with a deep grid pattern.
+- Center-anchored typographical powerhouse with dual layers:
+  Top: Operational status indicator + Coordinates.
+  Center: High-impact hero name + dynamic decrypt title.
+  Bottom: Kinetic metric ribbon + scroll invitation anchor.
+
+[Scroll Behavior & Choreography]
+- On Load: Screen boots like an AI system initializing. React Bits `DecryptedText` 
+  scrambles and locks into "AYUSH TANDON".
+- Initial Scroll (0vh to 50vh):
+  * The background grid expands slightly in Z-space (scale 1.0 -> 1.15).
+  * The name "AYUSH TANDON" scales up smoothly (scale 1.0 -> 1.4) while fading to 0.2 opacity.
+  * A circular mask at the exact center begins to prick open (clip-path circle from 0% to 15%).
+  * The status pill and metric ticker slide downward and disperse outward.
+
+[Exact Content & Copy]
+- Top Meta Badge:
+  [ ● SYSTEM ONLINE // LATENCY 14ms // GREATER NOIDA, INDIA // CGPA 9.11 ]
+- Pre-Heading (Micro-label):
+  "FULL-STACK AI ARCHITECT & SYSTEM ENGINEER"
+- Main Title (Primary Headline):
+  "AYUSH TANDON"
+- Animated Sub-Headline (Scramble / DecryptedText):
+  "Synthesizing Autonomous AI Agents, Zero-Trust LLM Defense & High-Throughput Backends."
+- Elevator Paragraph:
+  "Computer Science Engineer at Bennett University crafting enterprise-grade agentic 
+   ecosystems, fortified LLM gateways, and production full-stack architectures. 
+   Winner #1 at Microsoft Innovate 2026."
+- Quick Metrics Ribbon (Horizontal 4-column micro-bar):
+  * Stat 1: "1st Place" -> Microsoft Innovate 2026 (Dev Productivity)
+  * Stat 2: "700+" -> Problems Solved (LeetCode + CodeChef 3-Star)
+  * Stat 3: "9.11" -> Academic CGPA (B.Tech Computer Science)
+  * Stat 4: "5+" -> Professional AI & Cloud Certifications
+- Scroll Prompt Indicator:
+  "SCROLL TO INITIALIZE RUNTIME  ↓"
+
+[React Bits Integration]
+- Headline: `SplitText` with staggered spring reveal.
+- Sub-Headline: `DecryptedText` triggering on load and scroll entry.
+- Floating Cursor: `BlobCursor` or `SplashCursor` with low-opacity cyan glow (#00F0FF15).
+- Metric Ribbon: Wrapped in `SpotlightCard` with subtle borders.
+
+
+================================================================================
+4. TRANSITION 01 -> 02: THE APERTURE MASK EXPANSION
+================================================================================
+
+[Mechanism]
+- SVG Circle / CSS Mask Reveal (`clip-path: circle(calc(var(--scroll) * 1.5%) at 50% 50%)`).
+- As the user scrolls from 50vh to 100vh:
+  * The center circle mask punches through the Hero layer.
+  * The black/cyan grid background recedes.
+  * Behind the mask, Phase 02 (The Technical Manifesto) emerges cleanly.
+  * Soundless, friction-free optical opening that gives the feeling of diving through 
+    a camera lens or entering the AI's internal reasoning matrix.
+
+
+================================================================================
+5. PHASE 02: THE TECHNICAL MANIFESTO / PHILOSOPHY
+================================================================================
+
+[Visual Architecture & Layout]
+- Pinned Section (Duration: 200vh total scroll distance).
+- The viewport remains fixed while the user scrolls.
+- Visual Layer: A huge typographic statement spread across the screen in 3 distinct beats.
+- Background: React Bits `Waves` or `Aurora` in ultra-dark obsidian & violet tones, 
+  creating an atmospheric ambient glow that reacts to scroll velocity.
+
+[Scroll Behavior & Choreography]
+- Scroll 0% -> 33%: Beat 1 text lights up from 15% opacity to 100% pure white, 
+  with words scaling up slightly.
+- Scroll 34% -> 66%: Beat 1 dims to 20%; Beat 2 illuminates brightly with cyan highlights.
+- Scroll 67% -> 100%: Beat 2 dims to 20%; Beat 3 illuminates with emerald green highlights.
+- Mouse movement over the words triggers React Bits `VariableProximity` or `TrueFocus`, 
+  making the typography physically respond to the user's cursor.
+
+[Exact Content & Copy]
+- Section Index:
+  "[ 01 // CORE PHILOSOPHY ]"
+- Sub-Tag:
+  "HOW I THINK ABOUT SOFTWARE IN THE AGE OF INTELLIGENCE"
+
+- Beat 1 (The AI Shift):
+  "Traditional full-stack development is deterministic. Modern engineering is dynamic. 
+   I build software where deterministic web reliability meets non-deterministic LLM intelligence."
+
+- Beat 2 (The Architecture Standard):
+  "AI is only as good as the systems that constrain and guide it. From multi-agent LangGraph 
+   workflows to zero-trust security firewalls, I engineer guardrails, low-latency pipelines, 
+   and scalable infrastructure."
+
+- Beat 3 (Execution over Hype):
+  "Whether optimizing FastAPI microservices, architecting multi-tenant incubation CRMs, 
+   or securing production LLMs against prompt injection—code must be resilient, measurable, 
+   and production-ready."
+
+- Interactive Micro-callout (Bottom Corner):
+  "Hover across the statements to distort the gravity field."
+
+[React Bits Integration]
+- Typography: `TrueFocus` applied to highlighted keywords ("LangGraph", "zero-trust", "resilient").
+- Background: `Aurora` or `Waves` with slow drift.
+
+
+================================================================================
+6. TRANSITION 02 -> 03: THE WIREFRAME CONVERGENCE
+================================================================================
+
+[Mechanism]
+- 3D Card Stack Assembly.
+- As the manifesto completes (at scroll point 100% of Phase 02):
+  * The typography contracts horizontally into a compact status bar at the top:
+    "[ 02 // ENGINEERED SYSTEMS & REVOLUTIONARY BUILDS ]".
+  * The background transitions into a clean dark canvas with subtle geometric grid lines.
+  * Three floating 3D cards tilt into perspective from the bottom-right and stack behind 
+    one another, ready for Phase 03.
+
+
+================================================================================
+7. PHASE 03: FLAGSHIP ENGINEERED SYSTEMS (THE SHOWCASE DECK)
+================================================================================
+
+[Visual Architecture & Layout]
+- Pinned Horizontal Deck / 3D Stack (Duration: 400vh total scroll distance).
+- The viewport is pinned. As the user scrolls vertically, the portfolio smoothly slides 
+  horizontally across your major projects or swaps them via a 3D Z-plane deck.
+- Each project card is split into a 60/40 layout:
+  * Left side: Comprehensive System Intelligence (Name, Accolade, Problem, Solution, 
+    Architecture, Live Links, Tech Pills).
+  * Right side: High-fidelity interactive device frame / live preview simulation with 
+    hover tilt (`TiltedCard`) and spotlight reflections (`SpotlightCard`).
+
+[Scroll Behavior & Choreography]
+- Card 1 (PR Sentinel) is in full focus.
+- As user scrolls, Card 1 slides left/scales down to 0.9 and Card 2 (Rectitude.AI) sweeps in.
+- Another scroll pushes Card 2 and reveals Card 3 (Bennett University Hatchery & BHIMS).
+- Each project has dynamic interactive tags that brighten with React Bits `ShinyText`.
+
+---
+PROJECT 01: PR SENTINEL
+---
+- Category Tag: "AUTONOMOUS AI AGENT PLATFORM // DEVELOPER PRODUCTIVITY"
+- Accolade Badge: "★ WINNER #1 - MICROSOFT INNOVATE 2026 (DEVELOPER PRODUCTIVITY TRACK)"
+- Project Title: "PR Sentinel – AI-Powered Pull Request Intelligence"
+- Date / Timeline: "October 2026"
+- Live Deployment: "pr-sentinel-55j.pages.dev"
+- Tech Stack Pills:
+  [ Python ] [ FastAPI ] [ Next.js ] [ LLMs ] [ GitHub APIs ] [ AI Agents ] [ Cloudflare Pages ]
+
+- The Problem:
+  Code reviews in distributed teams are bottlenecked by context switching, hidden regression 
+  risks, and manual lint checks, slowing down release velocity.
+- The Architectural Solution:
+  Engineered an end-to-end autonomous agent workflow that hooks into GitHub webhooks, parses 
+  complex multi-file diffs, surfaces deep code-change risk metrics, highlights reviewer focus 
+  hotspots, and automatically suggests syntactically valid AI fixes before human review.
+- Key Technical Feats:
+  * Autonomous agentic workflows for multi-file AST diff analysis.
+  * Real-time automated risk scoring & blast-radius evaluation.
+  * Native GitHub App webhook integration with sub-second ingestion.
+- Quick Quote / Stat:
+  "Awarded 1st place across nationwide collegiate and professional entries at Microsoft Innovate."
+
+---
+PROJECT 02: RECTITUDE.AI
+---
+- Category Tag: "AI SECURITY & GOVERNANCE GATEWAY // ZERO-TRUST DEFENSE"
+- Badge: "ENTERPRISE LLM SHIELD"
+- Project Title: "Rectitude.AI – AI Security and Governance Platform"
+- Date / Timeline: "March 2026 – April 2026"
+- Live Deployment: "rectitude-ai-prompt-guard.vercel.app"
+- Tech Stack Pills:
+  [ FastAPI ] [ HuggingFace Transformers ] [ Next.js ] [ LLMs ] [ PyTorch ] [ Vercel ]
+
+- The Problem:
+  Production LLM applications are vulnerable to indirect prompt injections, jailbreaks, data 
+  poisoning, and unintentional exfiltration of proprietary credentials and PII.
+- The Architectural Solution:
+  Designed and implemented a zero-trust reverse-proxy security gateway for LLM endpoints. 
+  Every prompt and response is inspected through real-time transformer models for intent classification, 
+  semantic divergence, and hostile payloads before reaching upstream foundation models.
+- Key Technical Feats:
+  * Low-latency prompt injection & jailbreak detection firewall.
+  * Autonomous red-teaming simulator running continuous heuristic attacks on models.
+  * Behavioral drift monitoring & token-level anomaly detection.
+- Quick Metric:
+  "Sub-50ms inference overhead with deep semantic intent classification."
+
+---
+PROJECT 03: BENNETT UNIVERSITY HATCHERY PLATFORM & BHIMS CRM
+---
+- Category Tag: "ENTERPRISE INCUBATION ECOSYSTEM // MULTI-TENANT CRM"
+- Badge: "OFFICIAL CIE PRODUCTION PLATFORM"
+- Project Title: "Bennett University Hatchery & BHIMS Management Suite"
+- Date / Timeline: "July 2026 – October 2026"
+- Live Deployments:
+  * Platform: "cie.bennett.edu.in"
+  * CRM (BHIMS): "bhims.bennett.edu.in"
+- Tech Stack Pills:
+  [ Next.js ] [ React ] [ Laravel/PHP ] [ Node.js ] [ Supabase ] [ PostgreSQL ] [ Tailwind CSS ] [ GSAP ]
+
+- The Problem:
+  The Centre for Innovation and Entrepreneurship (CIE) relied on fragmented sheets and manual 
+  tracking for dozens of incubatee startups, angel investors, and mentor evaluations.
+- The Architectural Solution:
+  Built a unified public gateway and private multi-role enterprise CRM (BHIMS). Features 
+  granular Role-Based Access Control (RBAC) across Super Admins, Incubatees, and Mentors, 
+  complete with KPI milestone tracking, document verification pipelines, and financial analytics.
+- Key Technical Feats:
+  * Dual-engine backend: Next.js + Supabase for real-time reactivity paired with Laravel for 
+    complex relational business logic.
+  * Custom milestone approval engine with automated investor update feeds.
+  * High-performance GSAP micro-interactions on the public portal for pitch-deck presentation.
+
+[React Bits Integration]
+- Cards: `SpotlightCard` with interactive cursor highlights.
+- Preview Containers: `TiltedCard` creating authentic 3D hover physics.
+- Status & Awards: `ShinyText` on Microsoft Innovate badge.
+
+
+================================================================================
+8. TRANSITION 03 -> 04: BLUEPRINT DECONSTRUCTION
+================================================================================
+
+[Mechanism]
+- Grid Unfold & Schematic Projection.
+- As the last project card slides away:
+  * The card collapses into a central wireframe CPU icon.
+  * Circuit lines shoot out from the center in 4 directions, painting a schematic grid 
+    across the entire screen (`GridDistortion` or `Squares`).
+  * The headline "[ 03 // FULL-STACK AI TOPOLOGY ]" locks in at the top.
+
+
+================================================================================
+9. PHASE 04: THE FULL-STACK AI TOPOLOGY (SKILLS & ARCHITECTURE MATRIX)
+================================================================================
+
+[Visual Architecture & Layout]
+- Interactive System Map / 4-Tier Full-Stack Architecture Board.
+- Rather than a boring list of pill badges, your skills are represented as a living 
+  Distributed System Architecture Diagram.
+- Four distinct horizontal/grid tiers representing how you actually build software:
+  Tier 1: Intelligent Reasoning & Agentic Core (AI/ML)
+  Tier 2: High-Performance Backend & Distributed Systems (Backend & Core CS)
+  Tier 3: Fluid Experience & Kinetic Interfaces (Frontend & Creative Motion)
+  Tier 4: Cloud Infrastructure, Reliability & Data Stores (DevOps & Databases)
+
+[Scroll Behavior & Choreography]
+- As the user scrolls, each tier illuminates sequentially from top to bottom, mimicking 
+  data flow through a full-stack request.
+- Hovering over any technology triggers a micro-tooltip detailing what you use it for 
+  (e.g., hovering on "LangGraph" -> "Multi-agent cyclic orchestration & state machines").
+
+[Exact Content & Copy]
+- Section Header:
+  "[ 03 // FULL-STACK AI TOPOLOGY ]"
+- Sub-Headline:
+  "The Stack Behind High-Throughput Intelligent Applications"
+- Guiding Philosophy Note:
+  "I don't collect buzzwords; I orchestrate specialized toolchains to construct reliable systems."
+
+---
+TIER 1: INTELLIGENT REASONING & AGENTIC CORE (AI/ML)
+---
+- Heading: "Agentic Systems, RAG & LLM Workflows"
+- Overview: "Building autonomous software capable of planning, tool use, and self-correction."
+- Core Technologies:
+  * LLM Applications (GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro)
+  * Agentic Workflows & Multi-Agent Collaboration
+  * LangChain & LangGraph (Stateful Agent Workflows)
+  * Model Context Protocol (MCP) Integration
+  * Retrieval-Augmented Generation (RAG) & Vector Search
+  * HuggingFace Transformers & PyTorch
+  * Natural Language Processing (NLP) & Intent Classification
+
+---
+TIER 2: HIGH-THROUGHPUT BACKEND & SYSTEM ARCHITECTURE
+---
+- Heading: "Distributed Services & Low-Latency APIs"
+- Overview: "Deterministic server backbones designed for zero downtime and fast responses."
+- Core Technologies:
+  * FastAPI (Python async microservices, sub-millisecond route handling)
+  * Node.js & Express (Scalable asynchronous runtime)
+  * Laravel / PHP (Robust relational models & enterprise business rules)
+  * RESTful APIs & WebSocket Real-Time Protocols
+  * System Design & Distributed Scalability
+  * Database Design & Schema Normalization
+
+---
+TIER 3: INTERACTIVE USER SURFACES & KINETIC MOTION
+---
+- Heading: "Modern Frontend & Fluid Scrollytelling"
+- Overview: "Precision interfaces engineered with strict design fidelity and zero jank."
+- Core Technologies:
+  * React.js & Next.js (SSR, SSG, Server Actions, App Router)
+  * Tailwind CSS (Design tokens, utility-first styling)
+  * GSAP (GreenSock Animation Platform - complex timeline choreographies)
+  * React Bits Component Ecosystem (High-performance micro-interactions)
+  * Responsive Touch & Web Standards
+
+---
+TIER 4: RELIABILITY, DATA STORES & CLOUD INFRASTRUCTURE
+---
+- Heading: "Cloud Engine & Storage Foundation"
+- Overview: "Persistent, immutable, and scalable runtime infrastructure."
+- Core Technologies:
+  * PostgreSQL (Relational schema design, complex joins, indexing)
+  * Supabase (Real-time DB, Auth, Vector embeddings, Edge functions)
+  * Docker (Containerization & reproducible deployment builds)
+  * AWS (Cloud compute, S3, IAM, AI Practitioner certified)
+  * Vercel & Firebase (Edge hosting & serverless function deployment)
+  * Git & GitHub Actions (CI/CD automated test pipelines)
+
+---
+CORE COMPUTER SCIENCE BEDROCK (Sub-shelf):
+---
+- "Data Structures & Algorithms | Object-Oriented Programming (OOP) | DBMS | 
+   Operating Systems | Computer Networks | Time & Space Complexity Optimization"
+- Languages Fluent:
+  "Python • Java • C++ • TypeScript • JavaScript • SQL • PHP"
+
+[React Bits Integration]
+- Background: `Squares` or `GridDistortion` with low opacity.
+- Interactive Cards: `PixelCard` or `SpotlightCard` with neon border tracing on hover.
+
+
+================================================================================
+10. TRANSITION 04 -> 05: DATA STREAM IGNITION
+================================================================================
+
+[Mechanism]
+- Illuminated Trace Cable.
+- As the user leaves the Architecture Topology:
+  * A bright vertical light beam travels down the center of the screen like a fiber optic cable.
+  * As the light passes, it activates Phase 05: The Impact Trajectory (Work History).
+  * A subtle audio-visual feeling of speed and data transmission.
+
+
+================================================================================
+11. PHASE 05: THE IMPACT TRAJECTORY (EXPERIENCE & WORK HISTORY)
+================================================================================
+
+[Visual Architecture & Layout]
+- Sticky Rail Scrollytelling Timeline (Duration: 300vh total scroll distance).
+- Left Rail: Fixed vertical timeline track with pulsating indicator nodes.
+- Right Area: Expanded impact cards that glide into focus one by one as the scroll descends.
+- Visual Emphasis: Measurable engineering outcomes, architectural decisions, and production metrics.
+
+[Scroll Behavior & Choreography]
+- Scroll Step 1: Node 1 ignites -> Bennett University Hatchery intern card enters and expands.
+- Scroll Step 2: Node 1 stays solid; beam extends to Node 2 -> StepCode Technologies card enters.
+- Scroll Step 3: Beam extends to Node 3 -> CorpVenue AI internship card enters.
+
+[Exact Content & Copy]
+- Section Header:
+  "[ 04 // FIELD WORK & TRAJECTORY ]"
+- Sub-Headline:
+  "Real-World Production Experience"
+
+---
+ROLE 01: BENNETT UNIVERSITY HATCHERY (STARTUP INCUBATION CENTRE)
+---
+- Job Title: Full Stack Developer Intern
+- Organisation: Bennett University Hatchery – Startup Incubation Centre
+- Duration: "2026 – Present"
+- Location / Type: "Greater Noida, India // On-Premises"
+- Key Technologies:
+  [ Next.js ] [ React ] [ Laravel/PHP ] [ Node.js ] [ Supabase ] [ Tailwind CSS ] [ GSAP ]
+
+- Deep Technical Narrative:
+  * Spearheaded the architecture and public launch of the official Bennett University 
+    Hatchery incubation portal, serving as the digital face for startup cohorts, external 
+    investors, and government incubation grants.
+  * Architected and shipped BHIMS (Bennett Hatchery Incubation Management System), a custom 
+    multi-tenant CRM centralizing founder milestone reporting, mentor feedback rubrics, 
+    and executive analytics dashboards.
+  * Streamlined stakeholder communication by engineering automated notification and review 
+    pipelines, drastically decreasing turnaround time for startup milestone verification.
+  * Orchestrated high-performance GSAP animations and responsive UI layouts ensuring pristine 
+    cross-device accessibility and brand authority.
+
+---
+ROLE 02: STEPCODE TECHNOLOGIES PVT. LTD.
+---
+- Job Title: Fullstack Developer Intern
+- Organisation: StepCode Technologies Pvt. Ltd.
+- Duration: "June 2026 – Present"
+- Location / Type: "Remote // Agile Production Team"
+- Key Technologies:
+  [ React ] [ Next.js ] [ Node.js ] [ REST APIs ] [ PostgreSQL ] [ Production Debugging ]
+
+- Deep Technical Narrative:
+  * Build and maintain modern full-stack features using React and Next.js, integrating 
+    resilient backend microservices and database queries.
+  * Construct clean, documented RESTful endpoints and validate contracts using strict 
+    data schemas and error handling patterns.
+  * Conduct root-cause performance profiling, identifying database query bottlenecks 
+    and client-side re-rendering overheads to maximize service reliability.
+  * Collaborate in rapid sprint cycles with senior engineers to bring client-facing 
+    features to production readiness with zero regressions.
+
+---
+ROLE 03: CORPVENUE HOSPITALITY SOLUTIONS LLP
+---
+- Job Title: Project Intern
+- Organisation: CorpVenue Hospitality Solutions LLP (Mumbai)
+- Duration: "August 2025 – November 2025 · 3 mos"
+- Location / Type: "Mumbai, Maharashtra · Remote / Specialized Project Internship"
+- Key Technologies:
+  [ Web Development ] [ Rasa NLU ] [ React ] [ Python ] [ Multi-Turn Dialogue ] [ Latency Optimization ]
+
+- Deep Technical Narrative:
+  * Selected for a 3-month Project Internship under Director Gagan Sharma, focusing on real-time website development and production architecture.
+  * Developed an intelligent conversational AI assistant leveraging the Rasa framework, 
+    training custom NLU intent classifiers and entity extraction pipelines.
+  * Designed complex multi-turn dialogue state policies to handle non-linear customer 
+    inquiries and automated fallback strategies.
+  * Built a lightweight, responsive React conversational widget seamlessly embedded into 
+    client web surfaces.
+  * Diagnosed and eliminated critical backend bottlenecks in API webhook handlers, 
+    drastically cutting dialogue latency and elevating overall system reliability.
+
+[React Bits Integration]
+- Timeline Progress Bar: Driven by scroll progress variable (`window.scrollY`).
+- Impact Cards: Wrapped with `SpotlightCard` with green/cyan glow borders.
+
+
+================================================================================
+12. TRANSITION 05 -> 06: MILESTONE ACCELERATION
+================================================================================
+
+[Mechanism]
+- Kinetic Velocity Ticker & Horizon Shift.
+- As the user scrolls past the third experience card:
+  * Two opposite-moving horizontal ticker ribbons (`ScrollVelocity`) cross the screen at high speed.
+  * Top Ribbon: "★ 1ST PLACE MICROSOFT INNOVATE 2026 ★ 3-STAR CODECHEF ★ 700+ PROBLEMS SOLVED ★"
+  * Bottom Ribbon: "★ AWS CERTIFIED AI PRACTITIONER ★ IBM AGENTIC AI ★ COURSERA MCP SPECIALIST ★"
+  * The background transitions to an iridescent starfield or deep grid horizon.
+
+
+================================================================================
+13. PHASE 06: VALIDATED CREDENTIALS, ACCOLADES & COMPETITIVE MATRIX
+================================================================================
+
+[Visual Architecture & Layout]
+- Two-Column High-Impact Matrix (Duration: 200vh scroll or natural flow).
+- Left Column: Certified Technical Authority (Industry Credentials & Certifications).
+- Right Column: Competitive Programming & Leadership Footprint.
+- Visual Styling: Glassmorphism badges, metallic sheen (`ShinyText`), and hover illumination.
+
+[Exact Content & Copy]
+- Section Header:
+  "[ 05 // PROVEN CREDENTIALS & HARD PROOF ]"
+- Sub-Headline:
+  "Certified Mastery, Competitive Ranks & Community Leadership"
+
+---
+COLUMN A: SPECIALIZED CERTIFICATIONS (2026)
+---
+1. AWS Certified AI Practitioner
+   - Issuer: Amazon Web Services (AWS) // 2026
+   - Focus: Cloud AI infrastructure, model deployment, security, and enterprise AI practices.
+2. Agentic AI with LangChain and LangGraph
+   - Issuer: IBM // 2026
+   - Focus: Multi-agent stateful graphs, cyclic agent reasoning, and autonomous tool invocation.
+3. Advanced RAG with Vector Databases
+   - Issuer: IBM // 2026
+   - Focus: Chunking strategies, semantic embedding models, rerankers, and vector store scale.
+4. Build AI Agents Using MCP (Model Context Protocol)
+   - Issuer: Coursera // 2026
+   - Focus: Standardized agent tool discovery, context servers, and protocol implementations.
+5. Multimodal Generative AI Applications
+   - Issuer: IBM // 2026
+   - Focus: Vision-language models, audio-visual workflows, and multimodal generative pipelines.
+
+---
+COLUMN B: COMPETITIVE EXCELLENCE & HACKATHONS
+---
+1. Microsoft Innovate 2026 – Developer Productivity Track
+   - Rank: 1st Place Champion (Nationwide)
+   - Project: PR Sentinel (Autonomous PR review agent platform)
+2. Smart India Hackathon (SIH) Internal Selection
+   - Rank: 32 out of 600+ participating engineering teams
+   - Focus: High-stress rapid prototype engineering under intense deadlines.
+3. GOER Hackathon Finalist
+   - Rank: Top 10 Finalist among 60+ universities nationwide.
+4. Competitive Programming Mastery
+   - 3-Star Coder on CodeChef (500+ algorithmic problems conquered).
+   - 200+ LeetCode problems solved across complex graphs, dynamic programming, and data structures.
+   - Solid foundation in Time & Space Complexity analysis.
+
+---
+COLUMN C: LEADERSHIP & ECOSYSTEM IMPACT
+---
+1. Vice President – Artificial Intelligence Society (AIS)
+   - Spearheaded workshops, hackathons, and technical bootcamps with 500+ student attendees.
+   - Championed real-world generative AI curriculum and hands-on LLM hackathons on campus.
+2. Associate Lead – Developer & Coding Club (DCC)
+   - Mentored 200+ junior developers in Data Structures, Algorithms, and production web architecture.
+3. Academic Honors
+   - B.Tech Computer Science & Engineering at Bennett University (2024 – 2028).
+   - Cumulative GPA: 9.11 / 10.00.
+
+[React Bits Integration]
+- Badges: `StarBorder` on the Microsoft #1 Award.
+- Certifications List: `ShinyText` with shimmer animation on hover.
+- Background: `InfiniteScroll` or `RollingGallery` for certification logos/stamps.
+
+
+================================================================================
+14. TRANSITION 06 -> 07: SIGNAL CALIBRATION
+================================================================================
+
+[Mechanism]
+- Terminal Curtain Drop / Screen Wipe.
+- As the user scrolls into the finale:
+  * A dark, sleek command interface slides down like an avionics HUD visor.
+  * A pulsating cursor invites user engagement: "SYSTEM READY TO TRANSMIT".
+
+
+================================================================================
+15. PHASE 07: THE TRANSMISSION CONSOLE (INTERACTIVE OUTRO & REACH OUT)
+================================================================================
+
+[Visual Architecture & Layout]
+- Full-Screen Cinematic Finale (100vh).
+- Interactive Command Terminal / Clean Contact Dock.
+- Centerpiece: A bold, magnetic call-to-action that feels like dispatching an encrypted 
+  transmission to Ayush Tandon.
+- Ambient Background: Subtle `Particles` or `Hyperspeed` traveling at gentle idle speed.
+
+[Scroll Behavior & Choreography]
+- As the user reaches the bottom of the page:
+  * All background noise fades to pitch black with a gentle glowing cyan vignette.
+  * The command prompt types out: "ayush@systems:~$ ./initiate_contact.sh --priority high"
+  * Direct contact channels ignite into vibrant magnetic pills (`Magnet`).
+
+[Exact Content & Copy]
+- Pre-Title:
+  "[ 06 // TRANSMISSION INITIALIZED ]"
+- Primary Header:
+  "Let's Engineer the Next Generation of Intelligence."
+- Subtitle:
+  "Open for Full-Stack AI roles, agentic system contracts, and high-impact engineering 
+   collaborations. Whether you need an autonomous agent workflow, an impenetrable LLM 
+   firewall, or a zero-lag web application—let's talk."
+
+- Primary Direct Actions:
+  * Direct Email: "theayushtandon@gmail.com"
+  * Action Pill 1: "DISPATCH EMAIL" (mailto:theayushtandon@gmail.com)
+  * Action Pill 2: "VIEW RESUME (PDF)" (Direct download trigger for Ayush_Tandon_Full_Stack_AI_Resume.pdf)
+
+- Digital Coordinates (Social Connectors):
+  * GitHub: "github.com" -> [ Ayush Tandon ]
+  * LinkedIn: "linkedin.com/in" -> [ Ayush Tandon ]
+  * LeetCode: "leetcode.com" -> [ Ayush Tandon // 200+ Solved ]
+  * CodeChef: "codechef.com" -> [ 3-Star // 500+ Solved ]
+
+- Interactive Command Terminal Simulation (Micro-feature):
+  ```bash
+  > ayush.status = "Available for High-Impact Roles"
+  > ayush.location = "Greater Noida, India // Open to Remote Worldwide"
+  > ayush.focus = ["Agentic AI", "FastAPI / Next.js", "AI Security & Governance"]
+  > Press [ENTER] to copy contact details to clipboard.
+  ```
+
+- Subtle Bottom Footer Ticker:
+  "Designed & Engineered by Ayush Tandon © 2026 • Powered by Next.js, React Bits & GSAP • Zero Buttons, Pure Flow."
+
+[React Bits Integration]
+- Social Buttons: `Magnet` component with spring physics.
+- Background: `Particles` floating in void space.
+- Copy Actions: `DecryptedText` confirming "TRANSMISSION COPIED TO CLIPBOARD" upon click.
+
+
+================================================================================
+16. CONTENT COPY BANK (CLEAN COPY BLOCKS FOR DIRECT IMPLEMENTATION)
+================================================================================
+
+--- COPY BLOCK: HERO ---
+Name: Ayush Tandon
+Roles: Full-Stack AI Engineer | AI Systems | Backend Architect
+Tagline: Synthesizing Autonomous AI Agents, Zero-Trust LLM Defense & High-Throughput Backends.
+Bio: Computer Science Engineer at Bennett University (CGPA 9.11) crafting enterprise-grade agentic ecosystems, fortified LLM gateways, and production full-stack architectures. Winner #1 at Microsoft Innovate 2026.
+Email: theayushtandon@gmail.com
+Status: SYSTEM ONLINE // LATENCY 14ms // GREATER NOIDA, INDIA
+
+--- COPY BLOCK: MANIFESTO ---
+"Traditional software is deterministic. Modern intelligence is probabilistic. 
+ I bridge the divide—building systems where autonomous reasoning operates inside 
+ bulletproof architectural guardrails."
+
+--- COPY BLOCK: PR SENTINEL ---
+Title: PR Sentinel – AI-Powered Pull Request Intelligence Platform
+Award: Winner #1 at Microsoft Innovate 2026 (Developer Productivity Track)
+Date: October 2026
+Stack: Python, FastAPI, Next.js, LLMs, GitHub APIs, AI Agents, Cloudflare Pages
+URL: https://pr-sentinel-55j.pages.dev
+Summary: An AI-powered platform that analyzes pull requests to surface code-change risk, reviewer focus, and potential impact, with agentic workflows for diff analysis and AI-fix evaluation. Built to eliminate review bottlenecks in modern engineering teams.
+
+--- COPY BLOCK: RECTITUDE.AI ---
+Title: Rectitude.AI – AI Security and Governance Platform
+Badge: Zero-Trust LLM Security Gateway
+Date: March 2026 – April 2026
+Stack: FastAPI, HuggingFace Transformers, Next.js, LLMs, PyTorch, Vercel
+URL: https://rectitude-ai-prompt-guard.vercel.app
+Summary: Architected a zero-trust AI security gateway protecting LLM applications against prompt injection, jailbreaks, and data exfiltration. Built intent analysis, behavioral-drift monitoring, and autonomous red-teaming workflows for continuous AI threat simulation.
+
+--- COPY BLOCK: BENNETT UNIVERSITY HATCHERY & BHIMS ---
+Title: Bennett University Hatchery Platform & BHIMS CRM
+Badge: Official CIE Platform & Incubation Suite
+Date: July 2026 – October 2026
+Stack: Next.js, React, Laravel/PHP, Node.js, Supabase, PostgreSQL, Tailwind CSS, GSAP
+Platform URL: https://cie.bennett.edu.in
+CRM URL: https://bhims.bennett.edu.in
+Summary: Developed and launched the official platform for startup incubation, mentorship, and investor relations. Built BHIMS, a role-based CRM for Admins, Mentors, and Startup Founders with startup progress tracking, milestone management, founder interactions, and analytics dashboards.
+
+--- COPY BLOCK: EXPERIENCE ---
+1. Bennett University Hatchery (2026 – Present) | Full Stack Developer Intern
+- Developed and deployed the official Hatchery platform using Next.js, React, Laravel/PHP, Node.js, Supabase, Tailwind CSS, and GSAP.
+- Built a custom CRM for startup lifecycle management, covering progress and milestone tracking, founder interactions, dashboards, and analytics; translated stakeholder needs into scalable workflows.
+
+2. StepCode Technologies Pvt. Ltd. (June 2026 – Present) | Fullstack Developer Intern
+- Develop full-stack applications using React/Next.js, backend services, REST APIs, and database integrations.
+- Debug and optimize workflows for reliability and production readiness in an agile environment.
+
+3. CorpVenue Hospitality Solutions LLP (August 2025 – November 2025 · 3 mos) | Project Intern
+- Real-time website development and client project contributions under Director Gagan Sharma.
+- Built a Rasa-based conversational AI system with a React frontend and multi-turn dialogue flows.
+- Resolved backend bottlenecks affecting response latency and service reliability.
+
+--- COPY BLOCK: CERTIFICATIONS ---
+- AWS Certified AI Practitioner – AWS (2026)
+- Agentic AI with LangChain and LangGraph – IBM (2026)
+- Advanced RAG with Vector Databases – IBM (2026)
+- Build AI Agents Using MCP – Coursera (2026)
+- Multimodal Generative AI Applications – IBM (2026)
+
+--- COPY BLOCK: ACHIEVEMENTS & LEADERSHIP ---
+- Winner #1 at Microsoft Innovate 2026 – Developer Productivity Track
+- SIH (Smart India Hackathon) Internal Rank 32/600+
+- GOER Hackathon Finalist (Top 10 among 60+ universities)
+- 3-Star CodeChef (500+ problems solved) & 200+ LeetCode problems solved
+- Vice President, Artificial Intelligence Society (AIS) – 500+ attendees
+- Associate Lead, Developer & Coding Club (DCC) – Mentored 200+ students
+- Bennett University B.Tech CSE (2024 – 2028) – CGPA: 9.11
+
+================================================================================
+END OF BLUEPRINT
+================================================================================
+

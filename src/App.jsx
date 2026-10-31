@@ -1,9 +1,10 @@
 import { useState, useRef, Suspense, lazy, useEffect } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import TransitionOverlay from './components/TransitionOverlay';
 import ClickSpark from './components/ClickSpark';
+import { startBackgroundPrefetch } from './utils/heatmapData';
 
 const lazyWithRetry = (componentImport) =>
   lazy(async () => {
@@ -21,6 +22,7 @@ const Contact = lazyWithRetry(() => import('./components/Contact'));
 const Experience = lazyWithRetry(() => import('./components/Experience'));
 const Certifications = lazyWithRetry(() => import('./components/Certifications'));
 const Heatmaps = lazyWithRetry(() => import('./components/Heatmaps'));
+const Resume = lazyWithRetry(() => import('./components/Resume'));
 
 function App() {
   const [isLoading, setIsLoading] = useState(() => {
@@ -30,8 +32,9 @@ function App() {
   const transitionRef = useRef(null);
   const navigate = useNavigate();
 
-  // On mount, check if previously set to accessible mode
+  // On mount, check if previously set to accessible mode and start prefetching heatmap data
   useEffect(() => {
+    startBackgroundPrefetch();
     if (localStorage.getItem('accessible-mode') === 'true') {
       setIsAccessible(true);
       document.body.classList.add('accessible-mode');
@@ -81,6 +84,7 @@ function App() {
         <Route path="/experience" element={<Suspense fallback={null}><Experience onNavigate={handleNavigate} /></Suspense>} />
         <Route path="/certifications" element={<Suspense fallback={null}><Certifications onNavigate={handleNavigate} /></Suspense>} />
         <Route path="/heatmaps" element={<Suspense fallback={null}><Heatmaps onNavigate={handleNavigate} /></Suspense>} />
+        <Route path="/resume" element={<Suspense fallback={null}><Resume onNavigate={handleNavigate} /></Suspense>} />
         <Route path="/contact" element={<Suspense fallback={null}><Contact onNavigate={handleNavigate} /></Suspense>} />
       </Routes>
       

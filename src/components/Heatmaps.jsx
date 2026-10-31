@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { getInitialHeatmapData, subscribeToHeatmapUpdates, fetchLatestHeatmapData } from '../utils/heatmapData';
 
 const generateEmptyCalendarForYear = (year) => {
   let calendarStart;
@@ -189,124 +187,146 @@ const HeatmapGrid = ({ weeks, type, direction = "ltr", onHover, onLeave }) => {
   );
 };
 
+function calculateGithub(data) {
+  if (!data || !data.weeks) {
+    return {
+      weeks: generateEmptyCalendarForYear(null),
+      stats: { total: 0, activeDays: 0, streak: 0, maxDaily: 0 }
+    };
+  }
+  const levelMap = { NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4 };
+  const weeks = data.weeks.map(week => week.contributionDays.map(day => ({
+    date: day.date,
+    count: day.count,
+    level: levelMap[day.level] ?? 0
+  })));
+  let activeDays = 0, currentStreak = 0, maxStreak = 0, maxDaily = 0;
+  weeks.forEach(w => w.forEach(d => {
+    if (d.count > 0) { 
+      activeDays++;
+      currentStreak++; 
+      if (currentStreak > maxStreak) maxStreak = currentStreak; 
+      if (d.count > maxDaily) maxDaily = d.count;
+    } else {
+      currentStreak = 0;
+    }
+  }));
+  return {
+    weeks,
+    stats: { total: data.totalContributions || 0, activeDays, streak: maxStreak, maxDaily }
+  };
+}
+
+function calculateLeetcode(data) {
+  if (!data || !data.submission_calendar) {
+    return {
+      weeks: generateEmptyCalendarForYear(null),
+      stats: { total: 0, activeDays: 0, streak: 0, maxDaily: 0 }
+    };
+  }
+  const map = data.submission_calendar || {};
+  let totalSubmissions = 0;
+  Object.values(map).forEach(v => { totalSubmissions += Number(v); });
+  const entries = Object.entries(map);
+  const activeDays = entries.filter(([, count]) => Number(count) > 0).length;
+  
+  const dateMap = {};
+  entries.forEach(([ts, count]) => {
+    const dStr = new Date(Number(ts) * 1000).toISOString().split("T")[0];
+    dateMap[dStr] = Number(count);
+  });
+
+  const today = new Date();
+  const oneYearAgo = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate() - 364));
+  const startDayOfWeek = oneYearAgo.getUTCDay();
+  const calendarStart = new Date(oneYearAgo);
+  calendarStart.setUTCDate(oneYearAgo.getUTCDate() - startDayOfWeek);
+  const totalDays = 371;
+
+  const weeks = [];
+  let currentWeek = [];
+  let currentStreak = 0, maxStreak = 0, maxDaily = 0;
+  const loopDate = new Date(calendarStart);
+  for (let i = 0; i < totalDays; i++) {
+    const dStr = loopDate.toISOString().split("T")[0];
+    const count = dateMap[dStr] || 0;
+    let lvl = 0;
+    if (count > 0) {
+      if (count <= 2) lvl = 1;
+      else if (count <= 4) lvl = 2;
+      else if (count <= 7) lvl = 3;
+      else lvl = 4;
+    }
+    currentWeek.push({ date: dStr, count, level: lvl });
+    if (count > 0) { 
+      currentStreak++; 
+      if (currentStreak > maxStreak) maxStreak = currentStreak; 
+      if (count > maxDaily) maxDaily = count;
+    } else {
+      currentStreak = 0;
+    }
+    if (currentWeek.length === 7) {
+      weeks.push([...currentWeek]);
+      currentWeek = [];
+    }
+    loopDate.setDate(loopDate.getDate() + 1);
+  }
+  return {
+    weeks,
+    stats: { total: totalSubmissions, activeDays, streak: maxStreak, maxDaily }
+  };
+}
+
 export default function Heatmaps({ onNavigate }) {
   const containerRef = useRef(null);
   const [tooltip, setTooltip] = useState({ content: "", x: 0, y: 0, visible: false, color: "" });
-  
-  // Hardcoded to TheAyushTandon as requested
   const username = "TheAyushTandon";
-  
-  const [loading, setLoading] = useState(true);
-  
-  const [githubWeeks, setGithubWeeks] = useState(generateEmptyCalendarForYear(null));
-  const [githubStats, setGithubStats] = useState({ total: 0, activeDays: 0, streak: 0, maxDaily: 0 });
-  
-  const [leetcodeWeeks, setLeetcodeWeeks] = useState(generateEmptyCalendarForYear(null));
-  const [leetcodeStats, setLeetcodeStats] = useState({ total: 0, activeDays: 0, streak: 0, maxDaily: 0 });
 
-  const apiHost = import.meta.env.VITE_API_URL || "https://stepcode-heatmaps.onrender.com";
+  // Initialized synchronously from cache or seed data (0ms initial load!)
+  const [cachedData] = useState(() => getInitialHeatmapData());
+  const initialGh = calculateGithub(cachedData.githubData);
+  const initialLc = calculateLeetcode(cachedData.leetcodeData);
+
+  const [githubWeeks, setGithubWeeks] = useState(initialGh.weeks);
+  const [githubStats, setGithubStats] = useState(initialGh.stats);
+
+  const [leetcodeWeeks, setLeetcodeWeeks] = useState(initialLc.weeks);
+  const [leetcodeStats, setLeetcodeStats] = useState(initialLc.stats);
+
+  const [isSyncing, setIsSyncing] = useState(true);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       gsap.fromTo('.heatmap-card', 
-        { y: 100, opacity: 0, rotation: 2 },
-        { y: 0, opacity: 1, rotation: 0, duration: 0.8, stagger: 0.1, ease: "power3.out", scrollTrigger: { trigger: '.heatmap-card', start: "top 85%" } }
+        { y: 60, opacity: 0, rotation: 2 },
+        { y: 0, opacity: 1, rotation: 0, duration: 0.6, stagger: 0.12, ease: "power3.out" }
       );
     }, containerRef);
     return () => ctx.revert();
   }, []);
 
-  const processGithubData = (data) => {
-    const levelMap = { NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4 };
-    const weeks = data.weeks.map(week => week.contributionDays.map(day => ({
-      date: day.date, count: day.count, level: levelMap[day.level] ?? 0
-    })));
-    let activeDays = 0, currentStreak = 0, maxStreak = 0, maxDaily = 0;
-    weeks.forEach(w => w.forEach(d => {
-      if (d.count > 0) { 
-        activeDays++; currentStreak++; 
-        if (currentStreak > maxStreak) maxStreak = currentStreak; 
-        if (d.count > maxDaily) maxDaily = d.count;
+  useEffect(() => {
+    // Subscribe to live background updates
+    const unsubscribe = subscribeToHeatmapUpdates((updated) => {
+      if (updated.githubData) {
+        const gh = calculateGithub(updated.githubData);
+        setGithubWeeks(gh.weeks);
+        setGithubStats(gh.stats);
       }
-      else currentStreak = 0;
-    }));
-    setGithubWeeks(weeks);
-    setGithubStats({ total: data.totalContributions, activeDays, streak: maxStreak, maxDaily });
-  };
-
-  const processLeetcodeData = (data) => {
-    const map = data.submission_calendar || {};
-    let totalSubmissions = 0;
-    Object.values(map).forEach(v => totalSubmissions += Number(v));
-    const entries = Object.entries(map);
-    const activeDays = entries.filter(([_, count]) => count > 0).length;
-    
-    const dateMap = {};
-    entries.forEach(([ts, count]) => {
-      const dStr = new Date(Number(ts) * 1000).toISOString().split("T")[0];
-      dateMap[dStr] = Number(count);
+      if (updated.leetcodeData) {
+        const lc = calculateLeetcode(updated.leetcodeData);
+        setLeetcodeWeeks(lc.weeks);
+        setLeetcodeStats(lc.stats);
+      }
+      setIsSyncing(false);
     });
 
-    let calendarStart; let totalDays;
-    const today = new Date();
-    const oneYearAgo = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate() - 364));
-    const startDayOfWeek = oneYearAgo.getUTCDay();
-    calendarStart = new Date(oneYearAgo);
-    calendarStart.setUTCDate(oneYearAgo.getUTCDate() - startDayOfWeek);
-    totalDays = 371;
+    // Revalidate in background immediately
+    fetchLatestHeatmapData()
+      .then(() => setIsSyncing(false))
+      .catch(() => setIsSyncing(false));
 
-    const weeks = [];
-    let currentWeek = [];
-    let currentStreak = 0, maxStreak = 0, maxDaily = 0;
-    const loopDate = new Date(calendarStart);
-    for (let i = 0; i < totalDays; i++) {
-      const dStr = loopDate.toISOString().split("T")[0];
-      const count = dateMap[dStr] || 0;
-      let lvl = 0;
-      if (count > 0) { if (count <= 2) lvl = 1; else if (count <= 4) lvl = 2; else if (count <= 7) lvl = 3; else lvl = 4; }
-      currentWeek.push({ date: dStr, count, level: lvl });
-      if (count > 0) { 
-        currentStreak++; 
-        if (currentStreak > maxStreak) maxStreak = currentStreak; 
-        if (count > maxDaily) maxDaily = count;
-      } else currentStreak = 0;
-      if (currentWeek.length === 7) { weeks.push([...currentWeek]); currentWeek = []; }
-      loopDate.setDate(loopDate.getDate() + 1);
-    }
-    setLeetcodeWeeks(weeks);
-    setLeetcodeStats({ total: totalSubmissions, activeDays, streak: maxStreak, maxDaily });
-  };
-
-  const loadData = async () => {
-    setLoading(true);
-
-    try {
-      // Parallel fetch for speed
-      const [ghRes, lcRes] = await Promise.all([
-        fetch(`${apiHost}/api/github/heatmap/${username}`),
-        fetch(`${apiHost}/api/leetcode/heatmap/${username}`)
-      ]);
-
-      if (ghRes.ok) {
-        const ghData = await ghRes.json();
-        processGithubData(ghData);
-      }
-      
-      if (lcRes.ok) {
-        const lcData = await lcRes.json();
-        if (lcData && lcData.submission_calendar && Object.keys(lcData.submission_calendar).length > 0) {
-          processLeetcodeData(lcData);
-        }
-      }
-    } catch (e) {
-      console.error("Failed to fetch heatmaps", e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadData();
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -405,7 +425,9 @@ export default function Heatmaps({ onNavigate }) {
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
               <span style={{ fontFamily: 'Anton', fontSize: '1.2rem', color: 'var(--black)' }}>@{username}</span>
-              <span style={{ fontFamily: 'Roboto', fontSize: '0.9rem', color: 'gray' }}>{loading ? 'FETCHING INTEL...' : 'SYNC COMPLETE'}</span>
+              <span style={{ fontFamily: 'Roboto', fontSize: '0.85rem', color: isSyncing ? 'var(--red)' : '#10b981', fontWeight: 'bold' }}>
+                {isSyncing ? '● REFRESHING LIVE INTEL...' : '● LIVE INTEL SYNCED'}
+              </span>
             </div>
           </div>
 
@@ -452,7 +474,9 @@ export default function Heatmaps({ onNavigate }) {
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
               <span style={{ fontFamily: 'Anton', fontSize: '1.2rem', color: 'var(--black)' }}>@{username}</span>
-              <span style={{ fontFamily: 'Roboto', fontSize: '0.9rem', color: 'gray' }}>{loading ? 'FETCHING INTEL...' : 'SYNC COMPLETE'}</span>
+              <span style={{ fontFamily: 'Roboto', fontSize: '0.85rem', color: isSyncing ? 'var(--red)' : '#10b981', fontWeight: 'bold' }}>
+                {isSyncing ? '● REFRESHING LIVE INTEL...' : '● LIVE INTEL SYNCED'}
+              </span>
             </div>
           </div>
 

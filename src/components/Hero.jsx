@@ -1,10 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import ResumeModal from './ResumeModal';
+import PixelSwap from './PixelSwap';
 
 export default function Hero({ onNavigate }) {
   const containerRef = useRef(null);
   const heroImgRef = useRef(null);
   const menuRef = useRef(null);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -33,7 +36,7 @@ export default function Hero({ onNavigate }) {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const menuItems = ["PROJECTS", "EXPERIENCE", "CERTIFICATIONS", "HEATMAPS", "CONTACT"];
+  const menuItems = ["PROJECTS", "EXPERIENCE", "CERTIFICATIONS", "HEATMAPS", "CONTACT", "RESUME"];
 
   return (
     <div ref={containerRef} className="absolute-fill" style={{ overflow: 'hidden' }}>
@@ -69,31 +72,54 @@ export default function Hero({ onNavigate }) {
           {menuItems.map((item, i) => (
             <div 
               key={i} 
-              className="menu-item-box"
+              className="menu-item-box menu-item-pixel-swap"
               onClick={(e) => {
-                // Button turns red on click
-                e.currentTarget.style.backgroundColor = 'var(--red)';
-                e.currentTarget.style.boxShadow = '10px 10px 0px var(--black)';
-                
-                const textEl = e.currentTarget.querySelector('h2');
-                if (textEl) textEl.style.color = 'var(--white)';
-                
-                const iconEl = e.currentTarget.querySelector('span');
-                if (iconEl) iconEl.style.color = 'var(--black)';
+                const target = e.currentTarget;
+                target.style.boxShadow = '10px 10px 0px var(--black)';
 
-                // Trigger navigation transition
+                // Trigger navigation transition or modal
                 setTimeout(() => {
-                  onNavigate(item.toLowerCase());
+                  if (item === 'RESUME') {
+                    setIsResumeOpen(true);
+                    target.style.removeProperty('box-shadow');
+                  } else {
+                    onNavigate(item.toLowerCase());
+                  }
                 }, 150);
               }}
             >
-              <h2 className="font-p5 hero-menu-text">
-                <span className="hero-menu-icon">▶</span> {item}
-              </h2>
+              <PixelSwap
+                pattern="pointer"
+                pixelSize={20}
+                pixelRadius={0}
+                duration={360}
+                pixelDuration={280}
+                randomness={0.25}
+                bounce={0.25}
+                trigger="hover"
+                intro={false}
+                firstContent={
+                  <div className="hero-pixel-content hero-pixel-default">
+                    <h2 className="font-p5 hero-menu-text">
+                      <span className="hero-menu-icon">▶</span> {item}
+                    </h2>
+                  </div>
+                }
+                secondContent={
+                  <div className="hero-pixel-content hero-pixel-hovered">
+                    <h2 className="font-p5 hero-menu-text hero-menu-text-white">
+                      <span className="hero-menu-icon hero-menu-icon-black">▶</span> {item}
+                    </h2>
+                  </div>
+                }
+              />
             </div>
           ))}
         </div>
       </div>
+
+      {/* Full-Screen Persona 5 Resume Modal */}
+      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </div>
   );
 }

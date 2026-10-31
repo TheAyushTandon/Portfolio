@@ -1,9 +1,54 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Award, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import LogoLoop from './LogoLoop';
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiJavascript,
+  SiPython,
+  SiTailwindcss,
+  SiPostgresql,
+  SiMongodb,
+  SiDocker,
+  SiGit,
+  SiFastapi,
+  SiNodedotjs,
+  SiGraphql,
+  SiSupabase,
+  SiRedis,
+  SiLinux,
+  SiLangchain,
+  SiPytorch,
+  SiHuggingface,
+  SiCplusplus
+} from 'react-icons/si';
+import { FaAws } from 'react-icons/fa6';
 
-gsap.registerPlugin(ScrollTrigger);
+const techLogos = [
+  { node: <SiReact />, title: "React", href: "https://react.dev", hoverColor: "#61DAFB" },
+  { node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org", hoverColor: "#FFFFFF" },
+  { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org", hoverColor: "#3178C6" },
+  { node: <SiJavascript />, title: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript", hoverColor: "#F7DF1E" },
+  { node: <SiPython />, title: "Python", href: "https://www.python.org", hoverColor: "#3776AB" },
+  { node: <SiFastapi />, title: "FastAPI", href: "https://fastapi.tiangolo.com", hoverColor: "#009688" },
+  { node: <SiNodedotjs />, title: "Node.js", href: "https://nodejs.org", hoverColor: "#5FA04E" },
+  { node: <SiLangchain />, title: "LangChain", href: "https://www.langchain.com", hoverColor: "#1C3C3C" },
+  { node: <SiPytorch />, title: "PyTorch", href: "https://pytorch.org", hoverColor: "#EE4C2C" },
+  { node: <SiHuggingface />, title: "Hugging Face", href: "https://huggingface.co", hoverColor: "#FFD21E" },
+  { node: <FaAws />, title: "AWS", href: "https://aws.amazon.com", hoverColor: "#FF9900" },
+  { node: <SiDocker />, title: "Docker", href: "https://www.docker.com", hoverColor: "#2496ED" },
+  { node: <SiPostgresql />, title: "PostgreSQL", href: "https://www.postgresql.org", hoverColor: "#4169E1" },
+  { node: <SiSupabase />, title: "Supabase", href: "https://supabase.com", hoverColor: "#3ECF8E" },
+  { node: <SiMongodb />, title: "MongoDB", href: "https://www.mongodb.com", hoverColor: "#47A248" },
+  { node: <SiRedis />, title: "Redis", href: "https://redis.io", hoverColor: "#FF4438" },
+  { node: <SiTailwindcss />, title: "Tailwind CSS", href: "https://tailwindcss.com", hoverColor: "#38BDF8" },
+  { node: <SiGraphql />, title: "GraphQL", href: "https://graphql.org", hoverColor: "#E10098" },
+  { node: <SiGit />, title: "Git", href: "https://git-scm.com", hoverColor: "#F05032" },
+  { node: <SiLinux />, title: "Linux", href: "https://kernel.org", hoverColor: "#FCC624" },
+  { node: <SiCplusplus />, title: "C++", href: "https://isocpp.org", hoverColor: "#00599C" },
+];
 
 const certifications = [
   {
@@ -125,32 +170,30 @@ export default function Certifications({ onNavigate }) {
 
   useEffect(() => {
     let ctx = gsap.context(() => {
+      gsap.fromTo('.tech-loop-banner',
+        { y: -20, opacity: 0, scale: 0.96 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.2)" }
+      );
+
       const cards = gsap.utils.toArray('.cert-card');
       
-      cards.forEach((card, i) => {
-        gsap.fromTo(card, 
-          { 
-            y: 150, 
-            opacity: 0, 
-            rotation: i % 2 === 0 ? -15 : 15,
-            scale: 0.8
-          },
-          {
-            y: 0,
-            opacity: 1,
-            rotation: i % 2 === 0 ? -2 : 2,
-            scale: 1,
-            duration: 0.6,
-            ease: "back.out(1.5)",
-            scrollTrigger: {
-              trigger: card,
-              scroller: containerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-      });
+      gsap.fromTo(cards, 
+        { 
+          y: 70, 
+          opacity: 0, 
+          rotation: (i) => i % 2 === 0 ? -12 : 12,
+          scale: 0.85
+        },
+        {
+          y: 0,
+          opacity: 1,
+          rotation: (i) => i % 2 === 0 ? -2 : 2,
+          scale: 1,
+          duration: 0.45,
+          stagger: 0.04,
+          ease: "back.out(1.4)"
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();
@@ -218,6 +261,61 @@ export default function Certifications({ onNavigate }) {
             <h2 className="font-p5 hero-menu-text" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', color: 'inherit' }}>
               <span className="hero-menu-icon" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', color: 'inherit' }}>▶</span> BACK TO HQ
             </h2>
+          </div>
+        </div>
+
+        {/* Tech Stack Infinite Ribbon Banner */}
+        <div 
+          className="tech-loop-banner"
+          style={{
+            position: 'relative',
+            marginBottom: '4rem',
+            backgroundColor: 'var(--black)',
+            border: '4px solid var(--white)',
+            boxShadow: '10px 10px 0px var(--black)',
+            padding: '1.25rem 0',
+            transform: 'skewX(-2.5deg)',
+            color: 'var(--white)',
+            overflow: 'visible'
+          }}
+        >
+          {/* Persona 5 Header Pill Badge */}
+          <div 
+            style={{
+              position: 'absolute',
+              top: '-15px',
+              left: '1.5rem',
+              backgroundColor: 'var(--red)',
+              color: 'var(--white)',
+              border: '2px solid var(--white)',
+              padding: '0.2rem 1.2rem',
+              fontFamily: 'Roboto, sans-serif',
+              fontWeight: 900,
+              fontSize: 'clamp(0.75rem, 1.5vw, 0.95rem)',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              boxShadow: '4px 4px 0px var(--black)',
+              transform: 'skewX(5deg)',
+              zIndex: 10
+            }}
+          >
+            ★ TECH ARSENAL // CORE STACK ★
+          </div>
+
+          <div style={{ transform: 'skewX(2.5deg)' }}>
+            <LogoLoop
+              logos={techLogos}
+              speed={60}
+              direction="left"
+              logoHeight={34}
+              gap={44}
+              hoverSpeed={0}
+              scaleOnHover={true}
+              fadeOut={true}
+              fadeOutWidth={0.12}
+              labels="hover"
+              ariaLabel="Core Tech Arsenal"
+            />
           </div>
         </div>
 

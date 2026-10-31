@@ -24,22 +24,30 @@ const GithubIcon = ({ size = 20, strokeWidth = 2 }) => (
 const mockProjects = [
   {
     id: 1,
-    title: "BENNETT HATCHERY",
-    overview: "Official platform for the Bennett University Hatchery, facilitating startup incubation, mentorship, and investor relations.",
-    github: "https://github.com/TheAyushTandon",
-    site: "https://bennett-university-hatchery.vercel.app/",
-    stack: ["Next.js", "React", "Tailwind CSS", "GSAP"]
+    title: "PR SENTINEL",
+    overview: "AI engineering risk & review orchestration platform. Transforms pull requests into measurable risk surfaces using deterministic Tree-sitter AST blast radii, Semgrep security policies, and Gemini AI synthesis. Awarded #1 at Microsoft Innovate 2026.",
+    github: "https://github.com/TheAyushTandon/PR-Sentinel",
+    site: "https://pr-sentinel-55j.pages.dev/",
+    stack: ["TypeScript", "React", "Gemini 1.5", "Tree-sitter", "Supabase", "Semgrep"]
   },
   {
     id: 2,
-    title: "BHIMS CRM",
-    overview: "Comprehensive CRM portal for Bennett Hatchery. Features role-based access for Admins, Mentors, and Startup Founders with real-time analytics.",
+    title: "BENNETT HATCHERY",
+    overview: "Official platform for the Bennett University Hatchery, facilitating startup incubation, mentorship, and investor relations.",
     github: "https://github.com/TheAyushTandon",
-    site: "https://bennett-hatchery-crm.vercel.app/",
-    stack: ["Next.js", "Supabase", "PostgreSQL", "Tailwind CSS"]
+    site: "https://cie.bennett.edu.in",
+    stack: ["Next.js", "React", "Tailwind CSS", "GSAP"]
   },
   {
     id: 3,
+    title: "BHIMS CRM",
+    overview: "Comprehensive CRM portal for Bennett Hatchery. Features role-based access for Admins, Mentors, and Startup Founders with real-time analytics.",
+    github: "https://github.com/TheAyushTandon",
+    site: "https://bhims.bennett.edu.in",
+    stack: ["Next.js", "Supabase", "PostgreSQL", "Tailwind CSS"]
+  },
+  {
+    id: 4,
     title: "SKEWX / INSCRIBE",
     overview: "A fluid, high-fidelity rich-text editor and note-taking application designed with a focus on seamless user experience and dynamic formatting.",
     github: "https://github.com/TheAyushTandon",
@@ -47,7 +55,7 @@ const mockProjects = [
     stack: ["React", "Vite", "Appwrite", "GSAP"]
   },
   {
-    id: 4,
+    id: 5,
     title: "CAMPUS CURATOR",
     overview: "An exclusive digital marketplace tailored for university students to buy, sell, and discover campus-specific products and services.",
     github: "https://github.com/TheAyushTandon",
@@ -55,7 +63,7 @@ const mockProjects = [
     stack: ["React", "Node.js", "Express", "MongoDB"]
   },
   {
-    id: 5,
+    id: 6,
     title: "THE EQUIS",
     overview: "A modern, responsive digital experience platform featuring dynamic animations and a sleek user interface.",
     github: "https://github.com/TheAyushTandon",
@@ -63,7 +71,7 @@ const mockProjects = [
     stack: ["React", "GSAP", "Tailwind CSS", "Vite"]
   },
   {
-    id: 6,
+    id: 7,
     title: "BLOOM TOGETHER",
     overview: "An interactive digital garden and community platform designed to foster collaborative growth and sharing.",
     github: "https://github.com/TheAyushTandon",
@@ -71,7 +79,7 @@ const mockProjects = [
     stack: ["React", "Next.js", "Node.js", "Tailwind CSS"]
   },
   {
-    id: 7,
+    id: 8,
     title: "RECTITUDE AI GUARD",
     overview: "Advanced AI prompt security firewall. Identifies and mitigates malicious prompt injections and jailbreak attempts in real-time.",
     github: "https://github.com/TheAyushTandon",
@@ -79,7 +87,7 @@ const mockProjects = [
     stack: ["Python", "FastAPI", "React", "OpenAI API"]
   },
   {
-    id: 8,
+    id: 9,
     title: "TRAMS ASSIGNMENT",
     overview: "(Frontend Demo) A responsive and modern frontend implementation showcasing complex layout structuring and state management.",
     github: "https://github.com/TheAyushTandon",
@@ -87,7 +95,7 @@ const mockProjects = [
     stack: ["React", "Tailwind CSS", "Vite"]
   },
   {
-    id: 9,
+    id: 10,
     title: "STEPCODE LANDING",
     overview: "(Frontend Demo) High-conversion landing page for the StepCode learning platform featuring fluid scroll animations.",
     github: "https://github.com/TheAyushTandon",
@@ -95,7 +103,7 @@ const mockProjects = [
     stack: ["React", "GSAP", "Tailwind CSS"]
   },
   {
-    id: 10,
+    id: 11,
     title: "MEDIC MOCHA",
     overview: "(Frontend Demo) A sleek client-facing dashboard and landing interface for a medical and healthcare startup.",
     github: "https://github.com/TheAyushTandon",
@@ -103,7 +111,7 @@ const mockProjects = [
     stack: ["React", "Next.js", "Tailwind CSS"]
   },
   {
-    id: 11,
+    id: 12,
     title: "STEPCODE NEW",
     overview: "(Frontend Demo) The next-generation iteration of the StepCode landing page, incorporating an updated brand identity and aesthetics.",
     github: "https://github.com/TheAyushTandon",

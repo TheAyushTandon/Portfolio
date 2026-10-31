@@ -20,17 +20,23 @@ const experiences = [
       "Designed and developed a custom CRM platform for startup management.",
       "Implemented features for startup lifecycle management, including progress monitoring.",
       "Collaborated with stakeholders to understand operational requirements."
-    ]
+    ],
+    link: "https://cie.bennett.edu.in"
   },
   {
     id: 2,
     role: "Software Engineer",
-    company: "StepCode",
+    company: "StepCode Technologies",
     date: "Jun 2026 - Present · 3 mos",
     location: "Greater Noida · On-site",
     type: "FULL TIME",
-    skills: [],
-    details: []
+    skills: ["React", "Next.js", "Frontend Architecture", "UI/UX", "Animation Systems"],
+    details: [
+      "Engineered the official company landing page and interactive web experience from scratch.",
+      "Built modular, reusable component architectures with high-fidelity animations and responsive layouts.",
+      "Collaborated in agile sprint cycles with senior engineers to ensure high performance and zero regressions."
+    ],
+    logo: "/images/endorsements/stepcode.jpg"
   },
   {
     id: 3,
@@ -55,13 +61,14 @@ const experiences = [
     date: "Feb 2026 - May 2026 · 4 mos",
     location: "Uttar Pradesh, India · On-site",
     type: "FULL-TIME",
-    skills: ["Web Development"],
+    skills: ["Web Development", "Technical Mentorship", "Event Leadership"],
     details: [
       "Organizing skill-based workshops and training sessions (SDE, Data, Core CS, etc.).",
       "Designing structured preparation plans for placements and internships.",
       "Coordinating domain-wise training programs based on current industry needs.",
       "Helping students strengthen problem-solving, technical concepts, and interview readiness."
-    ]
+    ],
+    logo: "/images/endorsements/dean-career-cloud.png"
   },
   {
     id: 5,
@@ -70,24 +77,32 @@ const experiences = [
     date: "Sep 2025 - May 2026 · 9 mos",
     location: "Noida, Uttar Pradesh, India · On-site",
     type: "FULL-TIME",
-    skills: ["Web Development", "Artificial Intelligence (AI)"],
+    skills: ["Web Development", "Artificial Intelligence (AI)", "Event Management"],
     details: [
       "Planning and overseeing AI/ML workshops, seminars, and hands-on sessions.",
       "Guiding students in practical applications of AI, including ML projects and hackathons.",
       "Collaborating with faculty, industry professionals, and student teams.",
       "Supporting the President in strategic decision-making, event execution, and team coordination.",
       "Encouraging a culture of experimentation, problem-solving, and ethical AI awareness."
-    ]
+    ],
+    logo: "/images/endorsements/ais.png"
   },
   {
     id: 6,
     role: "Project Intern",
-    company: "CorpVenue",
-    date: "Aug 2025 - Nov 2025 · 4 mos",
+    company: "CorpVenue Hospitality Solutions LLP",
+    date: "Aug 2025 - Nov 2025 · 3 mos",
     location: "Mumbai, Maharashtra, India · Remote",
     type: "INTERNSHIP",
-    skills: ["Web Development", "Machine Learning", "+1 skill"],
-    details: []
+    skills: ["Website Development", "Conversational AI", "Python", "React", "Real-Time Systems"],
+    details: [
+      "Secured 3-month Project Internship under Director Gagan Sharma, gaining direct exposure to real-time website development and production architecture.",
+      "Contributed meaningful full-stack features to ongoing corporate event booking and venue management web projects.",
+      "Engineered conversational AI workflows and multi-turn dialogue state policies using Python and Rasa NLU.",
+      "Streamlined React frontend components and resolved backend webhook bottlenecks to maximize service uptime and reduce latency."
+    ],
+    link: "https://corpvenue.com",
+    logo: "/images/endorsements/corpvenue.jpg"
   }
 ];
 
@@ -230,33 +245,61 @@ function TimelineCard({ item, isLeft }) {
             width: '100%'
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '8px' }}>
             <span 
               className="font-p5 text-p5-red" 
               style={{ fontSize: '1rem', letterSpacing: '2px', background: 'var(--black)', padding: '0.2rem 0.5rem', color: 'white' }}
             >
               {item.type}
             </span>
-            {item.link && (
-              <a 
-                href={item.link} 
-                target="_blank" 
-                rel="noreferrer"
-                style={{ color: 'var(--black)', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none', fontWeight: 'bold' }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--red)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--black)' }}
-              >
-                <span className="font-p5">VIEW</span> <ExternalLink size={20} strokeWidth={3} />
-              </a>
-            )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {item.link && (
+                <a 
+                  href={item.link} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  style={{ color: 'var(--black)', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none', fontWeight: 'bold' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--red)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--black)' }}
+                >
+                  <span className="font-p5">VIEW</span> <ExternalLink size={20} strokeWidth={3} />
+                </a>
+              )}
+            </div>
           </div>
 
-          <h2 className="font-p5" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.5rem)', margin: '0 0 0.5rem 0', color: 'var(--black)', lineHeight: 1 }}>
-            {item.role.toUpperCase()}
-          </h2>
-          <h3 style={{ fontFamily: 'Roboto', fontSize: '1.2rem', margin: '0 0 1rem 0', color: 'var(--red)', fontWeight: 800 }}>
-            {item.company} // {item.location}
-          </h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', marginBottom: '0.5rem' }}>
+            <div style={{ flex: 1 }}>
+              <h2 className="font-p5" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.5rem)', margin: '0 0 0.5rem 0', color: 'var(--black)', lineHeight: 1 }}>
+                {item.role.toUpperCase()}
+              </h2>
+              <h3 style={{ fontFamily: 'Roboto', fontSize: '1.2rem', margin: '0 0 1rem 0', color: 'var(--red)', fontWeight: 800 }}>
+                {item.company} // {item.location}
+              </h3>
+            </div>
+            {item.logo && (
+              <div 
+                style={{
+                  width: '54px',
+                  height: '54px',
+                  flexShrink: 0,
+                  backgroundColor: 'var(--black)',
+                  border: '3px solid var(--black)',
+                  boxShadow: '4px 4px 0px var(--red)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden'
+                }}
+              >
+                <img 
+                  src={item.logo} 
+                  alt={item.company}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </div>
+            )}
+          </div>
 
           {item.details && item.details.length > 0 && (
             <ul ref={detailsRef} style={{ margin: 0, paddingLeft: '1.5rem', fontFamily: 'Roboto', fontSize: '1.05rem', color: 'var(--black)', lineHeight: 1.5 }}>
